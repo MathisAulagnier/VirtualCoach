@@ -15,3 +15,62 @@ L’objectif est de développer une application web/mobile qui génère des prog
 
 ## Conclusion :
 Le projet Virtual Coach a pour but de faciliter l’entraînement des utilisateurs en leur proposant des programmes personnalisés en fonction de leurs objectifs. Il met en œuvre des technologies avancées d'intelligence artificielle disponnible en open-source pour offrir un coaching virtuel fiable et adaptable à tous les niveaux sportifs.
+
+___
+
+## Utilisation pour le développement :
+
+### Configuration de l'environnement virtuel sous Linux
+
+Ce guide explique comment créer un environnement virtuel Python sous Linux et installer les dépendances à partir d'un fichier `requirements.txt`.
+
+### Prérequis
+
+- Python 3 installé sur votre machine.
+
+#### 1. Créer un environnement virtuel
+
+1. **Installer `virtualenv`** (si ce n'est pas déjà fait) :
+
+```bash
+   sudo apt install python3-venv
+```
+
+2.	**Créer un environnement virtuel** dans le répertoire de votre projet :
+    
+```bash
+python3 -m venv venv
+```
+
+3.	**Activer l’environnement virtuel** :
+    
+```bash
+source venv/bin/activate
+```
+
+Vous saurez que l’environnement est activé si vous voyez (env) au début de la ligne de commande.
+
+#### 2. Installer les dépendances
+
+1.	Assurez-vous que l’environnement virtuel est activé.
+2.	Installer les dépendances à partir de requirements.txt :
+
+```bash
+pip install -r requirements.txt
+```
+
+3. Désactiver l’environnement virtuel
+
+Lorsque vous avez terminé de travailler dans l’environnement virtuel, vous pouvez le désactiver avec la commande :
+    
+```bash
+deactivate
+```
+
+4. BONUS : Mettre à jour requirements.txt
+
+Si vous installez de nouvelles dépendances, vous pouvez mettre à jour requirements.txt avec la commande suivante :
+
+```bash
+pip freeze > requirements.txt
+``` 
