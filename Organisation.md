@@ -1,7 +1,7 @@
 # Organisation des cours et tâches associées
 
 **Objectifs pour le 20 septembre :**
-  - [OK] Constituer les équipes
+  - [Ok] Constituer les équipes
   - [ ] Choisir les outils pour la gestion du projet
   - [ ] Créer le nom et le logo de la startup
   - [ ] Sélectionner le ou les ensembles de données

@@ -1,7 +1,7 @@
 import ollama
 
-objectif = 'courir un marathon'
-date = '1er janvier 2023'
+objectif = 'developper couché à 100kg '
+date = '1er janvier 2024'
 nbr_trainning = '3'
 time_trainning = '1'
 
