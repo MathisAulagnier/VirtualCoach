@@ -163,3 +163,4 @@ cython_debug/
 
 # Dataset
 data/downloaded_gifs/
+models/
