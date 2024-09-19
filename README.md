@@ -74,3 +74,5 @@ Si vous installez de nouvelles dépendances, vous pouvez mettre à jour requirem
 ```bash
 pip freeze > requirements.txt
 ``` 
+
+
