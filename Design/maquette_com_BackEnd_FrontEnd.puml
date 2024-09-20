@@ -1,0 +1,26 @@
+@startuml
+actor User as "Utilisateur"
+
+package "Front-end (React)" {
+  component "Component React" as ReactComponent
+}
+
+package "Back-end (Flask)" {
+  component "API Flask" as FlaskAPI
+}
+
+package "Serveur Intermédiaire (Node.js)" {
+  component "Node.js" as NodeJS
+}
+
+User --> ReactComponent : Utilise l'application
+
+ReactComponent --> FlaskAPI : Requête de données (GET/POST)
+FlaskAPI --> FlaskAPI : Traitement des données
+FlaskAPI --> FlaskAPI : Exécute programme Python
+FlaskAPI --> NodeJS : Publie les résultats sur une URL
+NodeJS --> ReactComponent : Fournit les données au front-end
+
+ReactComponent --> NodeJS : Requête alternative (si nécessaire)
+NodeJS --> FlaskAPI : Lecture des données exposées (via URL Flask)
+@enduml
