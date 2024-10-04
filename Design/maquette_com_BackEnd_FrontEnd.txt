@@ -1,0 +1,23 @@
+@startuml
+actor User as "Utilisateur"
+
+package "Front-end (React)" {
+  component "Component React" as ReactComponent
+}
+
+package "Ollama" {
+  component "Server Ollama" as FlaskAPI
+}
+
+package "Serveur Intermédiaire (Node.js)" {
+  component "Node.js" as NodeJS
+}
+
+User --> ReactComponent : Utilise l'application
+
+FlaskAPI --> NodeJS : Réponse du LLM (HTTP)
+NodeJS --> ReactComponent : Fournit les données au front-end
+
+ReactComponent --> NodeJS : Envoie les entrées au Bask-end
+NodeJS --> FlaskAPI : Requête de données (GET/POST)
+@enduml
