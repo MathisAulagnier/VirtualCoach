@@ -76,3 +76,40 @@ pip freeze > requirements.txt
 ``` 
 
 
+## Communication JS <--> API ollama :
+
+#### 1. Installer / lancer le serveur Ollama
+
+1. Installer Ollama
+
+```bash
+curl -fsSL https://ollama.com/install.sh | sh
+```
+
+2. Installer llama3
+
+```bash
+ollama run llama3
+```
+
+3. Lancer le serveur Ollama en local
+
+```bash
+ollama serve
+```
+
+#### 2. Lancer app.js
+
+1. Ce rendre dans le dossier où est stocké le fichier app.js sur votre terminal
+
+exemple : "cd /mnt/c/Users/ryan4/projetIA"
+
+```bash
+cd Chemin_du_fichier
+```
+
+2. lancer le fichier app.js
+
+```bash
+node app.js
+```
