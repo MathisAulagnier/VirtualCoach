@@ -102,7 +102,7 @@ ollama serve
 
 1. Ce rendre dans le dossier où est stocké le fichier app.js sur votre terminal
 
-exemple : "cd /mnt/c/Users/ryan4/projetIA"
+exemple : "cd /mnt/c/Users/ryan4/projetIA/src"
 
 ```bash
 cd Chemin_du_fichier
