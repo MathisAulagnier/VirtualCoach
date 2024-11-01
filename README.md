@@ -98,6 +98,7 @@ ollama run llama3
 ollama serve
 ```
 
+
 #### 2. Lancer app.js
 
 1. Ce rendre dans le dossier où est stocké le fichier app.js sur votre terminal
@@ -108,7 +109,15 @@ exemple : "cd /mnt/c/Users/ryan4/projetIA/src"
 cd Chemin_du_fichier
 ```
 
-2. lancer le fichier app.js
+2. (optionnel) Réparer le dossier node_modules
+
+```bash
+rm -rf node_modules
+npm init -y
+npm install express axios cors path
+```
+
+3. lancer le fichier app.js
 
 ```bash
 node app.js
