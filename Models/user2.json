@@ -1,0 +1,14 @@
+{
+	"name": "Bob",
+	"sexe": 0,
+	"height": 180,
+	"weight": 120,		
+	"imc": 37.04,
+	"objective": 2,
+	"specification": 2,
+	"upper": 0,		
+	"lower": 0,		
+	"cardio": "bad",		
+	"nbrWorkout" : 2,	
+	"timeWorkout" : 45
+}
