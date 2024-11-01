@@ -164,3 +164,4 @@ cython_debug/
 # Dataset
 data/downloaded_gifs/
 src/node_modules/
+node_modules/
