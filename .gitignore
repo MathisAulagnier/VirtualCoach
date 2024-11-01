@@ -163,4 +163,4 @@ cython_debug/
 
 # Dataset
 data/downloaded_gifs/
-models/
+src/node_modules/

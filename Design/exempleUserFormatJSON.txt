@@ -7,11 +7,14 @@ Exemple json utilisateurs (fait avec la maquette et les deux fichiers des questi
 	"sexe": 1,		// binaire
 	"height": 165,		// en cm
 	"weight": 60,		// en KG
+	"imc": 22.04,		// en KG/m^2
 	"objective": 1,		// dans [1;4]
 	"specification": 1,	// dans [1;nbSpecif], il me semble qu'on avait dit autant de specif pour chaque objectif
 	"upper": 0,		// binaire
 	"lower": 1,		// binaire
-	"cardio": "medium"
+	"cardio": "medium",
+	"nbrWorkout" : 2,	// nombre de seances par semaine
+	"timeWorkout" : 30	// duree des seances en minutes
 }
 
 Alice, Femme, 1m65, 60kg, veut perdre du poids, specif1, haut du corps a la machine, peu tout pour le bas, cardio moyen
@@ -22,11 +25,14 @@ Alice, Femme, 1m65, 60kg, veut perdre du poids, specif1, haut du corps a la mach
 	"sexe": 0,
 	"height": 180,
 	"weight": 120,		//IMC > 30
+	"imc": 37.04,
 	"objective": 2,
 	"specification": 2,
 	"upper": 0,		// automatique pour IMC > 30
 	"lower": 0,		// idem
-	"cardio": "bad"		// idem
+	"cardio": "bad",		// idem
+	"nbrWorkout" : 2,	// nombre de seances par semaine
+	"timeWorkout" : 45	// duree des seances en minutes
 }
 
 Bob, homme, 1m80, 120kg, veut se remettre en forme, specif2, machine upper, machine lower, mauvais cardo
@@ -37,11 +43,15 @@ Bob, homme, 1m80, 120kg, veut se remettre en forme, specif2, machine upper, mach
 	"sexe": 0,
 	"height": 175,
 	"weight": 70,
+	"imc": 22.86,
 	"objective": 3,
 	"specification": 1,
 	"upper": 1,
 	"lower": 1,
-	"cardio": "good"
+	"cardio": "good",
+	"nbrWorkout" : 3,
+	"timeWorkout" : 60
+
 }
 
 Charles, Homme, 1m75, 70kg, veut devenir plus fort, specif1, peut tout pour le haut, peut tout pour le bas, bon cardio
