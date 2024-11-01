@@ -86,6 +86,7 @@ def generate_training_plan(user_data):
         messages.append(workout_prompt)
         # print(f"Prompt pour la séance d'entraînement #{i+1} :", workout_prompt["content"])
         workout_output = ollama.chat(model='llama3', messages=messages)
+        print(workout_output)
         messages.append(
             {
                 "role": "system",
