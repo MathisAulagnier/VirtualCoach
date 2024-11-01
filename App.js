@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { LogBox, StyleSheet, Text, View } from 'react-native';
 import Main from './app/Main';
 import { Provider } from 'react-redux';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +11,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { Colors } from './constants/Colors';
 
 export default function App() {
+
+  LogBox.ignoreAllLogs(); // Ignore all warnings
+
 
   const dispatch = useDispatch();
   const reduxUserData = useSelector((state) => state.global.userData);

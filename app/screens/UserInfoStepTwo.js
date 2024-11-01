@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { SIZES } from "../../constants/styles";
 import { Colors } from "../../constants/Colors";
@@ -17,6 +17,7 @@ export default UserInfoStepTwo = ({ navigation, onPress }) => {
     const [user, setUser] = useState(reduxUserData);
 
     const [selectedGender, setSelectedGender] = useState('');
+    const [imc, setImc] = useState('');
     const [selectedAge, setSelectedAge] = useState('');
     const [selectedWeight, setSelectedWeight] = useState('');
     const [selectedHeight, setSelectedHeight] = useState('');
@@ -38,19 +39,30 @@ export default UserInfoStepTwo = ({ navigation, onPress }) => {
         value: height
     }));
     const onSubmit = () => {
-        dispatch(setUserData({
-            ...user,
-            gender: selectedGender,
-            age: selectedAge,
-            weight: selectedWeight,
-            height: selectedHeight
-        }));
+        if (!selectedWeight) {
+            Alert.alert("Alert !", "Please weight is required.")
+            return;
+        }
+        if (!selectedHeight) {
+            Alert.alert("Alert !", "Please height is required.")
+            return;
+        }else {
+            setImc(selectedWeight/(selectedHeight*selectedHeight))
+            dispatch(setUserData({
+                ...user,
+                gender: selectedGender,
+                age: selectedAge,
+                weight: selectedWeight,
+                height: selectedHeight,
+                IMC: imc,
+            }));
+        }
     };
     console.log("++++++++UserInfoStepTwo: ", user)
 
     return (
         <View style={[styles.container, { backgroundColor: Colors.white }]}>
-            <Text style={styles.title}>{user?.username ? user?.username + ', ' : null}please fill in the following data</Text>
+            <Text style={styles.title}>Hi {user?.username ? user?.username + ', ' : null}please fill in the following data</Text>
             <Text style={styles.description}>MyCoach con unlock your body's hidden potential, but to do that it needs the most  accurate info from you.</Text>
 
             <View style={{ flex: 8, marginVertical: 20 }}>
@@ -125,7 +137,12 @@ export default UserInfoStepTwo = ({ navigation, onPress }) => {
             <View style={{ flex: 2 }}>
                 <NextBtn 
                     scrollTo={onSubmit} 
-                    onPress={onPress} 
+                    onPress={() => {
+                        if (selectedHeight && selectedWeight) {
+                            onPress();
+                        }
+                    }} 
+                    
                 />
             </View>
         </View>

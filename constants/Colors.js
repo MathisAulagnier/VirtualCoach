@@ -35,7 +35,7 @@ export const Colors = {
   blueb: '#3991F8',
   yellow: '#F4D03F',
   green: '#63C820',
-  greenb: '#89AB3F',
+  greenb: '#55A640',
   blueGrey: '#55648A',
   red: '#DD4632',
   whitesmoke: 'whitesmoke',

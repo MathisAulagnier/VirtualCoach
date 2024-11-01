@@ -10,49 +10,10 @@ export default NextBtn = ({percentage, scrollTo, onPress}) => {
 
     const {width, height} = useWindowDimensions();
     const size = 120;
-    const strokeWidth = 3;
-    const center = size/2;
-    const raduis = size/2 - strokeWidth/2; 
-    const circumference = 2 * Math.PI * raduis;
 
-    const progressAnimation = useRef(new Animated.Value(0)).current;
-    const progressRef = useRef(null);
-
-    const animation = (toValue) => {
-        return Animated.timing(progressAnimation, {
-            toValue,
-            duration: 250,
-            useNativeDriver: true,
-        }).start
-    }
-
-    useEffect(() => {
-        animation(percentage);
-        // console.log('percentage : ', percentage);
-        // console.log("%%%%%%", circumference);
-        
-    }, [percentage]);
 
     useEffect(() => {
         console.log("start1");
-
-        progressAnimation.addListener((value) => {
-            const strokeDashoffset= circumference - (circumference * value.value ) / 100;
-            
-            if (progressRef?.current) {
-                console.log("if****true");
-                
-                progressRef.current.setNativeProps({
-                    strokeDashoffset,
-                })
-            
-            }else {
-                console.log('ELSE');
-            }
-        }, [percentage]);
-        // return () => {
-        //     progressAnimation.removeAllListeners();
-        // }
     }, []);
 
     return (
@@ -98,7 +59,7 @@ const styles = StyleSheet.create ({
         width: SIZES.width - 20,
         height: SIZES.height / 16,
         backgroundColor: Colors.blue,
-        borderRadius: 15,
+        borderRadius: 10,
         padding: 5,
     },
     text: {
