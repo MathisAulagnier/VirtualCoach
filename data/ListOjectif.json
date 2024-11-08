@@ -1,0 +1,67 @@
+{
+    "Perdre_du_poids": {
+    },
+    "Rester_en_forme": {
+    },
+    "Devenir plus fort": {
+        "Jambes": {},
+        "Bras": {},
+        "Epaules": {},
+        "Dos": {},
+        "Poigne": {},
+        "Tronc": {},
+        "Tout le corps": {}
+    },
+    "Améliorer votre cardio": {
+        "Velo": {},
+        "Course": {},
+        "Marche": {},
+        "Escalier": {},
+        "rameur": {}
+    },
+    "Augmenter votre masse musculaire": {
+        "Jambes": {},
+        "Bras": {},
+        "Epaules": {},
+        "Dos": {},
+        "Poitrine": {},
+        "Abdo": {},
+        "Tout le corps": {}
+    },
+    "Tonifier et sculpter votre corps": {
+        "Abdomen": {},
+        "Cuisse": {},
+        "Fessiers": {},
+        "Bras": {},
+        "Epaules": {},
+        "Dos": {},
+        "Mollet": {},
+        "Tronc": {},
+        "Poitrine": {},
+        "Tout le corps": {}
+        
+    },
+    "Préparer un événement ou une compétition": {
+        "Marathon": {},
+        "Sprint": {},
+        "Powerlifting": {},
+        "Triathlon": {},
+        "Basketball": {}
+    },
+    "Réhabiliter après une blessure": {
+        "Genoux": {},
+        "Epaule": {},
+        "Dos": {},
+        "Cheville": {},
+        "Poignet": {},
+        "Hanches": {},
+        "Cou": {},
+        "Coude": {}
+    },
+    "Apprendre un mouvement": {
+        "Traction": {},
+        "Muscle up": {},
+        "Handstand": {}
+    }
+  }
+  
