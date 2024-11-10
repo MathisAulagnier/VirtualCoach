@@ -109,10 +109,9 @@ exemple : "cd /mnt/c/Users/ryan4/projetIA/src"
 cd Chemin_du_fichier
 ```
 
-2. (optionnel) Réparer le dossier node_modules
+2. Créer le dossier node_modules
 
 ```bash
-rm -rf node_modules
 npm init -y
 npm install express axios cors path
 ```
