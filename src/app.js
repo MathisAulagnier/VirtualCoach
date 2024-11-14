@@ -36,11 +36,13 @@ app.get('/', (req, res) => {
                     event.preventDefault();
 
                     try {
+                        const userDataFile = 'user1.json'; // Nom du fichier utilisateur
                         const response = await fetch('/api/generate-training', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
-                            }
+                            },
+                            body: JSON.stringify({ userDataFile }), // Envoyer la valeur de userDataFile
                         });
 
                         if (!response.ok) {
@@ -75,7 +77,11 @@ app.get('/', (req, res) => {
 
 // Nouvelle route pour générer le plan d'entraînement
 app.post('/api/generate-training', async (req, res) => {
-    const userDataFile = 'user2.json'; // Nom du fichier JSON utilisateur à traiter
+    const { userDataFile } = req.body; // Lire la valeur envoyée depuis React
+
+    if (!userDataFile) {
+        return res.status(400).json({ message: 'Nom de fichier utilisateur requis' });
+    }
     const outputFile = 'training_plan_' + userDataFile.replace('.json', '') + '.json';
 
     try {
