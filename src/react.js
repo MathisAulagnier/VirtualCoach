@@ -9,15 +9,18 @@ export default Profile = ({navigation}) => {
     const icon = 'chevron-forward';
     const size = 22;
 
+
     // !!!!!!!!!!!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // Fonction pour gérer la création d'un objectif
     const handleCreateGoal = async () => {
         try {
+            const userDataFile = 'user1.json'; // Nom du fichier utilisateur
             const response = await fetch('http://localhost:4000/api/generate-training', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                body: JSON.stringify({ userDataFile }), // Envoyer la valeur de userDataFile
             });
             const data = await response.json();
             if (!response.ok) {
