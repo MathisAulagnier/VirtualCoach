@@ -1,6 +1,9 @@
 const fs = require('fs');
 const axios = require('axios');
 
+let attemptCount = 0; // Initialisation du compteur de tentatives
+const maxRetries = 5; // Nombre maximum de tentatives
+
 // Fonction pour générer un plan d'entraînement
 async function generateTrainingPlan(userData, outputFile) {
     // Charger les données utilisateur
@@ -25,63 +28,57 @@ async function generateTrainingPlan(userData, outputFile) {
     const warmupPrompt = {
         role: "user",
         content: (
-            "Please create a warmup routine suitable for the user's goal and cardio level. " +
+            "Please create a warmup routine of only 3 different exercise names suitable for the user's goal and cardio level. " +
             "Ensure that it respects any restrictions (e.g., no upper body bodyweight exercises if upper is set to 0). " +
             "Include the muscle group targeted for each exercise. " +
-            "Just return the json file with the exercise names, sets, repetitions, rest time, GIF path, and muscle group without an text introduction or other text out of json file."
+            "Just return the json file with the names, sets, repetitions, rest_time, GIF_path, and muscle_group without an text introduction or other text out of the json file."
         )
     };
     messages.push(warmupPrompt);
-    //const warmupOutput = await chatWithOllama('llama3', messages);
-    const warmupJson = await chatWithOllama('llama3', messages);
-    //console.log(warmupOutput);
-    //console.log('Before pop :',messages);
+    const warmupJson = await chatWithOllama('llama3', messages, 3);
     messages.pop();
-    //console.log('After pop :',messages);
-    //const warmupJson = extractJson(warmupOutput);
-    //const warmupJson = warmupOutput;
+    console.log(warmupJson);
     if (!warmupJson) return null;
-    //console.log(warmupJson);
 
     // Génération des étirements
     console.log("Génération des étirements...");
     const stretchPrompt = {
         role: "user",
         content: (
-            "Please create a stretching routine to follow after the workout, considering the user's goal, restrictions, and cardio level. " +
+            "Please create a stretching routine of only 3 different exercise names to follow after the workout, considering the user's goal, restrictions, and cardio level. " +
             "Include the muscle group targeted for each exercise. " +
-            "Just return the json file with the exercise names, sets, repetitions, rest time, GIF path, and muscle group without an text introduction or other text out of json file."
+            "Just return the json file with the names, sets, repetitions, rest_time, GIF_path, and muscle_group without an text introduction or other text out of the json file."
         )
     };
     messages.push(stretchPrompt);
-    //const stretchOutput = await chatWithOllama('llama3', messages);
-    const stretchJson = await chatWithOllama('llama3', messages);
-    //const stretchJson = extractJson(stretchOutput);
-    //const stretchJson = stretchOutput;
+    const stretchJson = await chatWithOllama('llama3', messages, 3);
     if (!stretchJson) return null;
-    //console.log(stretchJson);
+    console.log(stretchJson);
     messages.pop();
 
     // Génération des séances d'entraînement
     let workoutPlans = [];
+    let exerciseNames = [];
     for (let i = 0; i < userInfo['nbrWorkout']; i++) {
         console.log(`Génération de la séance d'entraînement #${i + 1}...`);
         const workoutPrompt = {
             role: "user",
             content: (
                 `The user data is:\n${JSON.stringify(userInfo)}\n\n` +
-                "Please create a workout (not like the previous workout) that aligns with the user's goal, cardio level, and equipment restrictions. " +
+                `Please create a workout of only ${(userInfo['timeWorkout']-15)/15} different exercise names that aligns with the user's goal, cardio level, and equipment restrictions and who are not among them ${exerciseNames}. ` +
                 "Include the muscle group targeted for each exercise. " +
-                "Just return the json file with the exercise names, sets, repetitions, rest time, GIF path, and muscle group without an text introduction or other text out of json file."
+                "Just return the json file with the names, sets, repetitions, rest_time, gif_path, and muscle_group without an text introduction or other text out of the json file."
             )
         };
         messages.push(workoutPrompt);
-        //const workoutOutput = await chatWithOllama('llama3', messages);
-        const workoutJson = await chatWithOllama('llama3', messages);
-        //console.log("iyzeri");
-        //const workoutJson = extractJson(workoutOutput);
+        const workoutJson = await chatWithOllama('llama3', messages, (userInfo['timeWorkout']-15)/15);
         if (!workoutJson) return null;
-        //console.log(workoutJson);
+        // Récupérer les noms des exercices
+
+        const newExerciseNames = workoutJson.map(exercise => exercise.exercise_name);
+        exerciseNames = exerciseNames.concat(newExerciseNames);
+
+        console.log(workoutJson);
         workoutPlans.push(workoutJson);
         messages.pop();
     }
@@ -102,11 +99,12 @@ async function generateTrainingPlan(userData, outputFile) {
 }
 
 // Fonction pour envoyer un message à l'API Ollama
-async function chatWithOllama(model, messages) {
+async function chatWithOllama(model, messages, nb_exercise) {
     try {
         let string_all_reponse = '';
+        let last_chunk = '';
 
-        //console.log('Prompt envoyé à l\'API Ollama:', messages);
+        console.log(messages);
 
         // Envoi de la requête avec réponse en flux
         const response = await axios.post('http://localhost:11434/api/generate', {
@@ -121,26 +119,134 @@ async function chatWithOllama(model, messages) {
             response.data.on('data', (chunk) => {
                 const partialResponse = JSON.parse(chunk.toString()); // Convertir le chunk en objet JSON
 
-                if (partialResponse.response) {
-                    string_all_reponse += partialResponse.response;  // Ajouter chaque morceau à la réponse complète
+                if( (last_chunk.slice(-1) === ":" && partialResponse.response.slice(-1) >= '0' && partialResponse.response.slice(-1) <= '9' ) ||
+                    (last_chunk.slice(-1) >= '0' && last_chunk.slice(-1) <= '9' && partialResponse.response.slice(0,1) === ",") ) {
+                    string_all_reponse += '"';
                 }
 
+
+                // Vérification si partialResponse contient une clé 'response' valide
+                if (partialResponse.response && partialResponse.response !== "],") {
+                    string_all_reponse += partialResponse.response; // Ajouter chaque morceau à la réponse complète
+                }
+
+                //console.log(partialResponse.response);
+
                 if (partialResponse.done) {
+                    // Ajout de ']' si nécessaire
+                    if (last_chunk.slice(-1) !== "]" && partialResponse.response !== "]") {
+                        string_all_reponse += "]";
+                    }
+
                     // Nettoyage de la réponse en supprimant les parties non-JSON
-                    const cleanedResponse = string_all_reponse
+                    let cleanedResponse = string_all_reponse
                         .replace(/^.*?(\[.*\]).*$/, '$1') // Supprimer les commentaires
                         .trim();
 
-                    try {
-                        // Convertir le texte nettoyé en JSON
-                        //console.log("yuoollru");
-                        console.log(string_all_reponse);
-                        //console.log("yuoou");
-                        resolve(JSON.parse(string_all_reponse));
-                    } catch (err) {
-                        console.error("Erreur lors du parsing JSON nettoyé :", err);
-                        reject("Erreur lors du parsing JSON");
+                    // Remplacement de "(" par "["
+                    cleanedResponse = cleanedResponse.replace(/\(/g, "[");
+
+                    // Remplacement de ")" par "]"
+                    cleanedResponse = cleanedResponse.replace(/\)/g, "]");
+
+                    // Remplacement de "}],\n[{" par "},{"
+                    cleanedResponse = cleanedResponse.replace(/}],\s*\[{/g, "},{");
+                    cleanedResponse = cleanedResponse.replace(/}]\s*\[{/g, "},{");
+                    cleanedResponse = cleanedResponse.replace(/}\s*\[{/g, "},{");
+                    cleanedResponse = cleanedResponse.replace(/}]\s*{/g, "},{");
+                    cleanedResponse = cleanedResponse.replace(/},\s*\[{/g, "},{");
+                    cleanedResponse = cleanedResponse.replace(/}],\s*{/g, "},{");
+                    cleanedResponse = cleanedResponse.replace(/}","{/g, "},{");
+                    cleanedResponse = cleanedResponse.replace(/},"{/g, "},{");
+                    cleanedResponse = cleanedResponse.replace(/}",{/g, "},{");
+
+
+                    // Remplacement de "exercise" par "name"
+                    cleanedResponse = cleanedResponse.replace(/"name"/g, "\"exercise_name\"");
+                    cleanedResponse = cleanedResponse.replace(/"exercise"/g, "\"exercise_name\"");
+                    cleanedResponse = cleanedResponse.replace(/"Exercise"/g, "\"exercise_name\"");
+                    cleanedResponse = cleanedResponse.replace(/"Exercise_name"/g, "\"exercise_name\"");
+                    cleanedResponse = cleanedResponse.replace(/"Exercise_Name"/g, "\"exercise_name\"");
+                    cleanedResponse = cleanedResponse.replace(/"Exercise Name"/g, "\"exercise_name\"");
+                    cleanedResponse = cleanedResponse.replace(/"exercise name"/g, "\"exercise_name\"");
+                    cleanedResponse = cleanedResponse.replace(/"Exercise name"/g, "\"exercise_name\"");
+                    cleanedResponse = cleanedResponse.replace(/"Name"/g, "\"exercise_name\"");
+
+
+                    // Remplacement de "Rest_time" par "rest_time"
+                    cleanedResponse = cleanedResponse.replace(/rest time/g, "rest_time");
+                    cleanedResponse = cleanedResponse.replace(/Rest time/g, "rest_time");
+                    cleanedResponse = cleanedResponse.replace(/Rest_time/g, "rest_time");
+
+                    // Remplacement de "GIF_path" par "gif_path"
+                    cleanedResponse = cleanedResponse.replace(/Gif_path/g, "gif_path");
+                    cleanedResponse = cleanedResponse.replace(/gif path/g, "gif_path");
+                    cleanedResponse = cleanedResponse.replace(/GIF_path/g, "gif_path");
+
+                    // Remplacement de "muscle group" par "muscle_group"
+                    cleanedResponse = cleanedResponse.replace(/muscle group/g, "muscle_group");
+                    cleanedResponse = cleanedResponse.replace(/Muscle_group/g, "muscle_group");
+                    cleanedResponse = cleanedResponse.replace(/Muscle group/g, "muscle_group");
+                    cleanedResponse = cleanedResponse.replace(/muscle_groupe/g, "muscle_group");
+
+                    cleanedResponse = cleanedResponse.replace(/}].*$/, "}]");
+                    cleanedResponse = cleanedResponse.replace(/^.*?\[\{/s, "[{");
+                    cleanedResponse = cleanedResponse.replace(/}\,\"\].*$/, "}]");
+
+                    // Remplacement pour supprimer tout après "}]"
+                    cleanedResponse = cleanedResponse.replace(/}\s*\].*$/, "}]");
+
+                    // Remplacement pour supprimer tout avant "[{"
+                    cleanedResponse = cleanedResponse.replace(/^.*?\[\s*\{/s, "[{");
+
+
+                    const count_exercise = (cleanedResponse.match(/"exercise_name"/g) || []).length;
+                    const count_sets = (cleanedResponse.match(/"sets"/g) || []).length;
+                    const count_repetitions = (cleanedResponse.match(/"repetitions"/g) || []).length;
+                    const count_rest_time = (cleanedResponse.match(/"rest_time"/g) || []).length;
+                    const count_gif_path = (cleanedResponse.match(/"gif_path"/g) || []).length;
+                    const count_muscle_group = (cleanedResponse.match(/"muscle_group"/g) || []).length;
+                    console.log(cleanedResponse);
+                    if( (count_exercise !== nb_exercise) || (count_sets !== nb_exercise) ||
+                        (count_repetitions !== nb_exercise) || (count_rest_time !== nb_exercise) ||
+                        (count_gif_path !== nb_exercise) || (count_muscle_group !== nb_exercise) )
+                    {
+                        console.log(count_exercise, " , ", count_sets, " , ", count_repetitions, " , ", count_rest_time, " , ", count_gif_path, " , ", count_muscle_group, " !== ", nb_exercise);
+                        // Déclencher manuellement une erreur pour capturer l'exception
+                        try {
+                            throw new Error("Le nombre d'occurrences de 'exercise_name' ne correspond pas à 'nb_exercise'.");
+                        } catch (err) {
+                            console.error("Erreur de correspondance du nombre d'exercices :", err);
+                            // Ajout d'une logique pour limiter la récursion
+                            if (attemptCount < maxRetries) { // Vous devez définir attemptCount et maxRetries
+                                attemptCount++;
+                                console.log(attemptCount, " < ", maxRetries);
+                                resolve(chatWithOllama(model, messages, nb_exercise));
+                            } else {
+                                reject("Erreur lors du parsing JSON après plusieurs tentatives.");
+                            }
+                        }
+                    } else {
+                        try {
+                            console.log(count_exercise, " , ", count_sets, " , ", count_repetitions, " , ", count_rest_time, " , ", count_gif_path, " , ", count_muscle_group, " !== ", nb_exercise);
+
+                            // Convertir le texte nettoyé en JSON
+                            resolve(JSON.parse(cleanedResponse));
+                        } catch (err) {
+                            console.error("Erreur lors du parsing JSON nettoyé :", err);
+                            // Ajout d'une logique pour limiter la récursion
+                            if (attemptCount < maxRetries) { // Vous devez définir attemptCount et maxRetries
+                                attemptCount++;
+                                console.log(attemptCount, " < ", maxRetries);
+                                resolve(chatWithOllama(model, messages, nb_exercise));
+                            } else {
+                                reject("Erreur lors du parsing JSON après plusieurs tentatives.");
+                            }
+                        }
                     }
+                }
+                if (partialResponse.response !== " ") {
+                    last_chunk = partialResponse.response;
                 }
             });
 
@@ -153,17 +259,6 @@ async function chatWithOllama(model, messages) {
     } catch (error) {
         console.error('Erreur lors de la communication avec l\'API Ollama:', error.message);
         throw error;
-    }
-}
-
-// Fonction pour extraire le JSON d'une sortie
-function extractJson(output) {
-    if (output && output.message && output.message.content) {
-        const jsonStrCleaned = output.message.content.replace(/\/\/.*/g, '');  // Supprimer les commentaires
-        return jsonStrCleaned;
-    } else {
-        console.error('Structure de sortie inattendue:', output);
-        return null;
     }
 }
 
