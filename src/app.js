@@ -36,7 +36,7 @@ app.get('/', (req, res) => {
                     event.preventDefault();
 
                     try {
-                        const userDataFile = 'user1.json'; // Nom du fichier utilisateur
+                        const userDataFile = 'user3.json'; // Nom du fichier utilisateur
                         const response = await fetch('/api/generate-training', {
                             method: 'POST',
                             headers: {
