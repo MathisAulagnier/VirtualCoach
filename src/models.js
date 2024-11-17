@@ -94,7 +94,9 @@ async function generateTrainingPlan(userData, outputFile) {
     });
 
     // Écrire le plan d'entraînement dans un fichier JSON
+    console.log("outputFile :", outputFile);
     fs.writeFileSync(outputFile, JSON.stringify(trainingPlan, null, 4));
+    console.log("yiuiui");
     return trainingPlan;
 }
 
@@ -230,6 +232,7 @@ async function chatWithOllama(model, messages, nb_exercise) {
                             throw new Error("Le nombre d'occurrences de 'exercise_name' ne correspond pas à 'nb_exercise'.");
                         } catch (err) {
                             console.error("Erreur de correspondance du nombre d'exercices :", err);
+                             console.log(attemptCount, " < ", maxRetries);
                             // Ajout d'une logique pour limiter la récursion
                             if (attemptCount < maxRetries) { // Vous devez définir attemptCount et maxRetries
                                 attemptCount++;
@@ -247,6 +250,7 @@ async function chatWithOllama(model, messages, nb_exercise) {
                             resolve(JSON.parse(cleanedResponse));
                         } catch (err) {
                             console.error("Erreur lors du parsing JSON nettoyé :", err);
+                            console.log(attemptCount, " < ", maxRetries);
                             // Ajout d'une logique pour limiter la récursion
                             if (attemptCount < maxRetries) { // Vous devez définir attemptCount et maxRetries
                                 attemptCount++;
