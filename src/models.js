@@ -119,8 +119,8 @@ async function chatWithOllama(model, messages, nb_exercise) {
             response.data.on('data', (chunk) => {
                 const partialResponse = JSON.parse(chunk.toString()); // Convertir le chunk en objet JSON
 
-                if( (last_chunk.slice(-1) === ":" && partialResponse.response.slice(-1) >= '0' && partialResponse.response.slice(-1) <= '9' ) ||
-                    (last_chunk.slice(-1) >= '0' && last_chunk.slice(-1) <= '9' && partialResponse.response.slice(0,1) === ",") ) {
+                if( (last_chunk.slice(-1) === ":" && ((partialResponse.response.slice(-1) >= '0' && partialResponse.response.slice(-1) <= '9') || (partialResponse.response.slice(-1) === '-') )) ||
+                    (((last_chunk.slice(-1) >= '0' && last_chunk.slice(-1) <= '9') || (last_chunk.slice(-1) === '-')) && partialResponse.response.slice(0,1) === ",") ) {
                     string_all_reponse += '"';
                 }
 
@@ -149,6 +149,9 @@ async function chatWithOllama(model, messages, nb_exercise) {
                     // Remplacement de ")" par "]"
                     cleanedResponse = cleanedResponse.replace(/\)/g, "]");
 
+                    cleanedResponse = cleanedResponse.replace(/"-/g, "\"");
+                    cleanedResponse = cleanedResponse.replace(/-"/g, "\"");
+
                     // Remplacement de "}],\n[{" par "},{"
                     cleanedResponse = cleanedResponse.replace(/}],\s*\[{/g, "},{");
                     cleanedResponse = cleanedResponse.replace(/}]\s*\[{/g, "},{");
@@ -159,6 +162,7 @@ async function chatWithOllama(model, messages, nb_exercise) {
                     cleanedResponse = cleanedResponse.replace(/}","{/g, "},{");
                     cleanedResponse = cleanedResponse.replace(/},"{/g, "},{");
                     cleanedResponse = cleanedResponse.replace(/}",{/g, "},{");
+                    cleanedResponse = cleanedResponse.replace(/}\s*{/g, "},{");
 
 
                     // Remplacement de "exercise" par "name"
@@ -177,6 +181,15 @@ async function chatWithOllama(model, messages, nb_exercise) {
                     cleanedResponse = cleanedResponse.replace(/rest time/g, "rest_time");
                     cleanedResponse = cleanedResponse.replace(/Rest time/g, "rest_time");
                     cleanedResponse = cleanedResponse.replace(/Rest_time/g, "rest_time");
+
+                    cleanedResponse = cleanedResponse.replace(/\s*seconds\s*",/g, "\",");
+                    cleanedResponse = cleanedResponse.replace(/\s*seconds\s*,/g, "\",");
+                    cleanedResponse = cleanedResponse.replace(/\s*second\s*,/g, "\",");
+                    cleanedResponse = cleanedResponse.replace(/\s*second\s*",/g, "\",");
+
+                    cleanedResponse = cleanedResponse.replace(/:\s*hold\s*,/g, ": \"hold\",");
+                    cleanedResponse = cleanedResponse.replace(/:\s*hold\s*"\s*,/g, ": \"hold\",");
+                    cleanedResponse = cleanedResponse.replace(/:\s*"\s*hold\s*,/g, ": \"hold\",");
 
                     // Remplacement de "GIF_path" par "gif_path"
                     cleanedResponse = cleanedResponse.replace(/Gif_path/g, "gif_path");
