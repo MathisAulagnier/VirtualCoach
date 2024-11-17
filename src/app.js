@@ -7,11 +7,7 @@ const app = express();
 const PORT = 4000;
 
 // Middleware
-app.use(cors({
-    origin: '*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-})); // Permettre les requêtes cross-origin
+app.use(cors()); // Permettre les requêtes cross-origin
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -100,7 +96,7 @@ app.post('/api/generate-training', async (req, res) => {
 });
 
 // Démarrer le serveur
-app.listen(PORT,'0.0.0.0', () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Le serveur écoute sur http://0.0.0.0:${PORT}`);
 });
 
