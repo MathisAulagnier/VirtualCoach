@@ -15,7 +15,7 @@ export default Profile = ({navigation}) => {
     const handleCreateGoal = async () => {
         try {
             const userDataFile = 'user1.json'; // Nom du fichier utilisateur
-            const response = await fetch('http://localhost:4000/api/generate-training', {
+            const response = await fetch('http://192.168.151.204:4000/api/generate-training', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
