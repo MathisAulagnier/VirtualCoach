@@ -81,10 +81,12 @@ async function generateTrainingPlan(userData, outputFile) {
         console.log(workoutJson);
         workoutPlans.push(workoutJson);
         messages.pop();
+        console.log("kkked");
     }
 
     // Regrouper tous les éléments du programme dans un seul JSON
     let trainingPlan = {};
+    console.log("kkkzzzzzed");
     workoutPlans.forEach((workout, index) => {
         trainingPlan[`seance${index + 1}`] = {
             warmup: warmupJson,
@@ -92,6 +94,7 @@ async function generateTrainingPlan(userData, outputFile) {
             stretch: stretchJson
         };
     });
+    console.log("kkkzaeezezzed");
 
     // Écrire le plan d'entraînement dans un fichier JSON
     console.log("outputFile :", outputFile);
