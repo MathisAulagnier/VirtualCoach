@@ -3,35 +3,34 @@ import shutil
 import ollama
 
 prompt_sys = """
-You are tasked with converting exercise names from French to English for GIF files. The input will consist of French exercise names in the format of filenames (e.g., "pompes-claquees.gif", "developpe-incline-halteres-exercice-musculation.gif", "developpe-couche.gif"). Your job is to generate the appropriate English exercise names, ensuring the following rules are applied:
-
-1. Translate the French exercise name to English.
-2. Use the specific English exercise names provided (e.g., "Push-up with Claps" should be converted to "pushup_with_claps").
-3. Don't specify the gender if it's included in the French exercise name (e.g., "femme" should not be included in the English exercise name).
-4. Replace spaces with underscores (_) in the resulting English filenames, there is no (-) and not majuscules.
-
-For example:
-    input : ["pompes-claquees.gif", "developpe-incline-halteres-exercice-musculation.gif", "developpe-couche.gif", "fente-avant-barre-femme.gif"]
-    output : ["pushup_with_claps", "incline_dumbbell_press", "bench_press", "lunge_barbell"]
-
-Please return the English exercise names in the same order as the input, separated by newlines.
+I will provide you with a list of exercises in French. I want you to classify them into the following muscle groups:
+muscle_groups_names : ["arms", "shoulders", "back", "chest", "abs", "legs", "glutes"]
+You will have to return a list of the same length as the input list, with the name of the muscle group to which each exercise belongs.
+Additionally, generalize the exercise name and return it in the following format: group/
+You have to return only a LIST without any print.
+Here is an example of input:
+["Les_fentes", "Les_développés_couchés", "Les_tractions","Les_crunchs","Les_squats","Les_élévations_latérales","Les_curls_biceps","Les_extensions_triceps" ,"Les_ponts_pour_les_fessiers" ,"La_planche", "dips"]
+You have to return:
+[legs/,"chest/" ,"back/" ,"abs/","legs/","shoulders/","arms/","arms/","glutes/","abs/", "arms/"]
+Be careful with the spelling and the format of the names.
 """
 
 muscle_groups = {
-    "arms": ["bicep", "tricep", "arm", "curl"],
-    "shoulders": ["shoulder", "deltoid", "press"],
-    "back": ["row", "lat", "pull", "deadlift"],
-    "chest": ["bench", "press", "chest", "pushup"],
-    "abs": ["crunch", "situp", "plank", "abs"],
-    "legs": ["squat", "lunge", "leg", "calf"],
-    "glutes": ["glute", "hip", "bridge"]
+    "arms": [],
+    "shoulders": [],
+    "back": [],
+    "chest": [],
+    "abs": [],
+    "legs": [],
+    "glutes": []
 }
 
 def ask_ollama(prompt_sys=prompt_sys, prompt=""):
     # Interact with the Ollama model
-    response = ollama.chat(model='mistral', messages=[
-        {'role': 'system', 'content': prompt_sys,},
-        {'role': 'user', 'content': prompt,},])
+    response = ollama.chat(model='llama3', messages=[
+        {'role': 'system', 'content': prompt_sys},
+        {'role': 'user', 'content': prompt}
+    ])
     return response['message']['content'].strip()
 
 # Directory containing GIFs and the destination directory
@@ -41,44 +40,56 @@ destination_dir = "renamed_organized_gifs"
 # Create the destination directory if it doesn't exist
 os.makedirs(destination_dir, exist_ok=True)
 
+indice = 0
 input = []
+
+# Create folders for each muscle group
+for group in muscle_groups.keys():
+    os.makedirs(os.path.join(destination_dir, group), exist_ok=True)
+
+length = len(os.listdir(source_dir))
+print(f"Total number of files: {length}")
 
 for filename in os.listdir(source_dir):
     if filename.endswith(".gif"):
-        source_path = os.path.join(source_dir, filename)
         input.append(filename)
 
         if len(input) >= 20:
             response = ask_ollama(prompt_sys, '\n'.join(input))
-            english_names = response.split('\n')
+            response = response[response.find("["):response.find("]")+1]
+            english_names = response[1:-1].replace('\n', '').replace('"', '').replace(' ', '').split(',')
 
-            # Vérification pour s'assurer que les listes ont la même longueur
-            if len(english_names) != len(input):
-                print("Erreur: la longueur de la réponse ne correspond pas à la longueur de l'entrée.")
-                print("Entrée:", input)
-                print("Réponse d'Ollama:", english_names)
-                input = []  # Réinitialiser l'entrée pour éviter de traiter des fichiers incorrectement
-                continue
+            print(input)
+            print('____')
+            print(english_names)
+            # Copy and rename files based on English names
+            for original_name, english_name in zip(input, english_names):
+                source_path = os.path.join(source_dir, original_name)
+                target_path = os.path.join(destination_dir, english_name, original_name)
 
-            for i, file in enumerate(input):
-                file_path = os.path.join(source_dir, file)
-                new_filename = english_names[i]
-
-                # Déterminer le groupe musculaire à partir des mots clés
-                muscle_group = None
-                for group, keywords in muscle_groups.items():
-                    if any(keyword in new_filename for keyword in keywords):
-                        muscle_group = group
-                        break
-
-                if muscle_group:
-                    new_dir = os.path.join(destination_dir, muscle_group)
-                    os.makedirs(new_dir, exist_ok=True)
-                    new_file_path = os.path.join(new_dir, new_filename + ".gif")
-                else:
-                    new_file_path = os.path.join(destination_dir, new_filename + ".gif")
-                
-                shutil.copy(file_path, new_file_path)
+                # Copy the file if the source file exists, otherwise skip
+                try:
+                    shutil.copy(source_path, target_path)
+                except FileNotFoundError:
+                    print(f"Skipping file '{original_name}' - source or destination path not found.")
+            
+            # Clear input list for the next batch
+            indice += 20
+            print(f"{indice}/{length} files processed")
             input = []
 
-print("All files processed.")
+# Process any remaining files if they don't complete a batch of 20
+if input:
+    response = ask_ollama(prompt_sys, '\n'.join(input))
+    response = response[response.find("["):response.find("]")+1]
+    english_names = response[1:-1].replace('\n', '').replace('"', '').replace(' ', '').split(',')
+
+    for original_name, english_name in zip(input, english_names):
+        source_path = os.path.join(source_dir, original_name)
+        target_path = os.path.join(destination_dir, english_name, original_name)
+        
+        # Copy the file if the source file exists, otherwise skip
+        try:
+            shutil.copy(source_path, target_path)
+        except FileNotFoundError:
+            print(f"Skipping file '{original_name}' - source or destination path not found.")
