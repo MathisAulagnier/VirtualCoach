@@ -1,0 +1,15 @@
+{
+	"name": "Charles",
+	"sexe": 0,
+	"height": 175,
+	"weight": 70,
+	"imc": 22.86,
+	"objective": 3,
+	"specification": 1,
+	"upper": 1,
+	"lower": 1,
+	"cardio": "good",
+	"nbrWorkout" : 3,
+	"timeWorkout" : 60
+
+}

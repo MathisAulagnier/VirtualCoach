@@ -47,6 +47,11 @@ python3 -m venv venv
 ```bash
 source venv/bin/activate
 ```
+ou
+
+```bash
+.\venv\Scripts\Activate
+```
 
 Vous saurez que l’environnement est activé si vous voyez (env) au début de la ligne de commande.
 
