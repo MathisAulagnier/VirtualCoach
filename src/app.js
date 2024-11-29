@@ -2,7 +2,9 @@
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
-const models = require('./models'); // Import du fichier models.js
+const models = require('./models');
+const fs = require("fs");
+const path = require("path"); // Import du fichier models.js
 const app = express();
 const PORT = 4000;
 
@@ -78,11 +80,17 @@ app.get('/', (req, res) => {
 // Nouvelle route pour générer le plan d'entraînement
 app.post('/api/generate-training', async (req, res) => {
     console.log("appel passé");
-    const { userDataFile } = req.body; // Lire la valeur envoyée depuis React
+    let { userDataFile } = req.body; // Lire la valeur envoyée depuis React
 
     if (!userDataFile) {
         return res.status(400).json({ message: 'Nom de fichier utilisateur requis' });
     }
+    console.log(userDataFile);
+    /*userDataFile.forEach(exercise => {
+        delete exercise.gif_path; // Supprime la clé gif_path
+    });*/
+    fs.writeFileSync("user3.json", JSON.stringify(userDataFile, null, 4));
+    userDataFile = "user3.json";
     const outputFile = 'training_plan_' + userDataFile.replace('.json', '') + '.json';
 
     try {
