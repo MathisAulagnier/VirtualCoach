@@ -198,7 +198,7 @@ async function findNameFiles(name_repo){
                     return fs.statSync(fullPath).isFile();
                 });
 
-                console.log('Fichiers dans le dossier data_gifs/', name_repo, ' :', fileNames);
+                //console.log('Fichiers dans le dossier data_gifs/', name_repo, ' :', fileNames);
                 resolve(fileNames);
             });
         } catch (error) {
