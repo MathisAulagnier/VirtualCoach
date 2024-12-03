@@ -85,10 +85,12 @@ app.post('/api/generate-training', async (req, res) => {
     if (!userDataFile) {
         return res.status(400).json({ message: 'Nom de fichier utilisateur requis' });
     }
+    delete userDataFile.formatPhoneNumber; // Supprime la clé formatPhoneNumber
+    delete userDataFile.email;
+    delete userDataFile.phoneNumber;
+
     console.log(userDataFile);
-    /*userDataFile.forEach(exercise => {
-        delete exercise.gif_path; // Supprime la clé gif_path
-    });*/
+
     fs.writeFileSync("user3.json", JSON.stringify(userDataFile, null, 4));
     userDataFile = "user3.json";
     const outputFile = 'training_plan_' + userDataFile.replace('.json', '') + '.json';
