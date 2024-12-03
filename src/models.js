@@ -30,17 +30,15 @@ async function generateTrainingPlan(userData, outputFile) {
         role: "user",
         content: (
             "Please create a warmup routine of only 3 different exercise names suitable for the user's goal and cardio level. " +
-            "Ensure that it respects any restrictions (e.g., no upper body bodyweight exercises if upper is set to 0). " +
+            "Ensure that it respects any restrictions (e.g., no upper body bodyweight exercises if upper is set to 0 and no lower body bodyweight exercises if lower is set to 0). " +
             "Include the only muscle group targeted for each exercise who is inside this list [Shoulder, Biceps, Triceps, Chest, Abs, Back, Glutes, Legs, Others, Stretching]. " +
             "Just return the json file with the names, sets, repetitions, rest_time, GIF_path, and muscle_group without an text introduction or other text out of the json file."
         )
     };
     messages.push(warmupPrompt);
-    //const warmupJson = await chatWithOllama('llama3', messages, 3);
     const warmupJson = await globalCall(messages,3)
     messages.pop();
     console.log(warmupJson);
-    //if (!warmupJson) return null;
 
     // Génération des étirements
     console.log("Génération des étirements...");
@@ -48,13 +46,12 @@ async function generateTrainingPlan(userData, outputFile) {
         role: "user",
         content: (
             "Please create a stretching routine of only 3 different exercise names to follow after the workout, considering the user's goal, restrictions, and cardio level. " +
+            "Ensure that it respects any restrictions (e.g., no upper body bodyweight exercises if upper is set to 0 and no lower body bodyweight exercises if lower is set to 0). " +
             "Include the only muscle group targeted for each exercise who is inside this list [Shoulder, Biceps, Triceps, Chest, Abs, Back, Glutes, Legs, Others, Stretching]. " +
             "Just return the json file with the names, sets, repetitions, rest_time, GIF_path, and muscle_group without an text introduction or other text out of the json file."
         )
     };
     messages.push(stretchPrompt);
-    //const stretchJson = await chatWithOllama('llama3', messages, 3);
-    //if (!stretchJson) return null;
     const stretchJson = await globalCall(messages,3)
     console.log(stretchJson);
     messages.pop();
@@ -69,82 +66,18 @@ async function generateTrainingPlan(userData, outputFile) {
             content: (
                 `The user data is:\n${JSON.stringify(userInfo)}\n\n` +
                 `Please create a workout of only ${(userInfo['timeWorkout']-15)/15} different exercise names that aligns with the user's goal, cardio level, and equipment restrictions and who are not among them ${exerciseNames}. ` +
+                "Ensure that it respects any restrictions (e.g., no upper body bodyweight exercises if upper is set to 0 and no lower body bodyweight exercises if lower is set to 0). " +
                 "Include the only muscle group targeted for each exercise who is inside this list [Shoulder, Biceps, Triceps, Chest, Abs, Back, Glutes, Legs, Others, Stretching]. " +
                 "Just return the json file with the names, sets, repetitions, rest_time, gif_path, and muscle_group without an text introduction or other text out of the json file."
             )
         };
         messages.push(workoutPrompt);
 
-        /*let workoutJson;
-        let newExerciseNames;
-        let ExerciseMuscleGroup;
-        let rerun = false;
-        do {
-            // Appel de l'API pour obtenir un plan d'entraînement
-            workoutJson = await chatWithOllama('llama3', messages, (userInfo['timeWorkout'] - 15) / 15);
-
-            if (!workoutJson) {
-                console.error("Erreur : Aucun plan d'entraînement reçu.");
-                return null;
-            }
-
-            // Récupérer les noms des exercices et les groupes musculaires
-            newExerciseNames = workoutJson.map(exercise => exercise.exercise_name);
-            ExerciseMuscleGroup = workoutJson.map(exercise => exercise.muscle_group);
-
-            console.log("Noms des exercices :", newExerciseNames);
-            console.log("Groupes musculaires :", ExerciseMuscleGroup);
-
-            // Vérifier si tous les groupes musculaires sont valides
-            rerun = false;
-            for (let i = 0; i < ExerciseMuscleGroup.length; i++) {
-                if (
-                    ExerciseMuscleGroup[i] !== 'Shoulder' &&
-                    ExerciseMuscleGroup[i] !== 'Biceps' &&
-                    ExerciseMuscleGroup[i] !== 'Triceps' &&
-                    ExerciseMuscleGroup[i] !== 'Chest' &&
-                    ExerciseMuscleGroup[i] !== 'Abs' &&
-                    ExerciseMuscleGroup[i] !== 'Back' &&
-                    ExerciseMuscleGroup[i] !== 'Glutes' &&
-                    ExerciseMuscleGroup[i] !== 'Legs' &&
-                    ExerciseMuscleGroup[i] !== 'Others' &&
-                    ExerciseMuscleGroup[i] !== 'Stretching'
-                ) {
-                    rerun = true;
-                    console.warn(`Groupe musculaire invalide trouvé : ${ExerciseMuscleGroup[i]}`);
-                    break; // Pas besoin de continuer si un groupe invalide est détecté
-                }
-            }
-        } while (rerun === true);
-
-        console.log("Noms des exercices :", newExerciseNames);
-        console.log("Groupes musculaires :", ExerciseMuscleGroup);
-
-        let gif_path_array = [];
-        for (let i = 0; i < newExerciseNames.length; i++) {
-            const gifPath = await askGifOllama('llama3', newExerciseNames[i], ExerciseMuscleGroup[i]);
-            gif_path_array.push(gifPath);
-        }
-        console.log(gif_path_array)
-        console.log(gif_path_array)
-
-        console.log(workoutJson);
-
-        // Remplacer la valeur de gif_path dans workoutJson avec gif_file depuis gif_path_array
-        for (let i = 0; i < workoutJson.length; i++) {
-            if (gif_path_array[i] && gif_path_array[i].gif_file) {
-                workoutJson[i].gif_path = 'data_gifs/'+ExerciseMuscleGroup[i]+'/'+gif_path_array[i].gif_file; // Remplacement de la valeur
-            } else {
-                console.warn(`Aucun gif trouvé pour l'exercice : ${workoutJson[i].exercise_name}`);
-            }
-        }
-        console.log("Workout JSON après mise à jour des gif_path :", workoutJson);*/
-
         const workoutJson = await globalCall(messages,(userInfo['timeWorkout'] - 15) / 15)
         newExerciseNames = workoutJson.map(exercise => exercise.exercise_name);
         exerciseNames = exerciseNames.concat(newExerciseNames);
 
-        //console.log(workoutJson);
+        console.log(workoutJson);
         workoutPlans.push(workoutJson);
         messages.pop();
     }
@@ -161,8 +94,7 @@ async function generateTrainingPlan(userData, outputFile) {
 
     // Écrire le plan d'entraînement dans un fichier JSON
     console.log("outputFile :", outputFile);
-    //const folderPath = path.join(__dirname, 'file_json');
-    const folderPath = 'training_plan_json';
+    const folderPath = '../client/data/training_plan_json';
 
     // Vérifier si le dossier existe, sinon le créer
     if (!fs.existsSync(folderPath)) {
@@ -180,9 +112,8 @@ async function generateTrainingPlan(userData, outputFile) {
 async function findNameFiles(name_repo){
     return new Promise((resolve, reject) => {
         try{
-            // Chemin vers le dossier "Image/Back"
-            const name_path = 'data_gifs/'+name_repo;
-            console.log(name_path);
+            // Chemin vers le dossier "data_gifs/name_repo"
+            const name_path = '../client/data/data_gifs/'+name_repo;
             const folderPath = path.join(__dirname, name_path);
 
             // Lire les fichiers dans le dossier
@@ -198,7 +129,6 @@ async function findNameFiles(name_repo){
                     return fs.statSync(fullPath).isFile();
                 });
 
-                //console.log('Fichiers dans le dossier data_gifs/', name_repo, ' :', fileNames);
                 resolve(fileNames);
             });
         } catch (error) {
@@ -212,11 +142,10 @@ async function askGifOllama(model, name_exercise, name_muscle_group) {
     try {
         // Obtenir les noms de fichiers disponibles
         const names_of_files = await findNameFiles(name_muscle_group); // Appeler avec `await`
-        //console.log("oeiyoeor");
+
         if (names_of_files.length === 0) {
             throw new Error('Aucun fichier trouvé pour ce groupe musculaire.');
         }
-        //console.log(names_of_files);
 
         let messages = [];
 
@@ -259,7 +188,6 @@ async function askGifOllama(model, name_exercise, name_muscle_group) {
                         // Remplacement pour supprimer tout avant "[{"
                         cleanedResponse = cleanedResponse.replace(/^.*?\[\s*\{/s, "[{");
 
-                        console.log(cleanedResponse)
                         const count_gif_file = (cleanedResponse.match(/"gif_file"/g) || []).length;
                         if(count_gif_file !== 1){
                             try {
@@ -268,7 +196,7 @@ async function askGifOllama(model, name_exercise, name_muscle_group) {
                                 console.error("Erreur de correspondance du nombre de gif_file :", err);
                                 console.log(attemptCount, " < ", maxRetries);
                                 // Ajout d'une logique pour limiter la récursion
-                                if (attemptCount < maxRetries) { // Vous devez définir attemptCount et maxRetries
+                                if (attemptCount < maxRetries) {
                                     attemptCount++;
                                     console.log(attemptCount, " < ", maxRetries);
                                     resolve(askGifOllama(model, name_exercise, name_muscle_group));
@@ -278,13 +206,12 @@ async function askGifOllama(model, name_exercise, name_muscle_group) {
                             }
                         }else{
                             try{
-                                console.log(count_gif_file+" === 1");
                                 resolve(JSON.parse(cleanedResponse));
                             }catch (err) {
                                 console.error('Erreur lors de la creation du nom du gif:', err);
                                 console.log(attemptCount, " < ", maxRetries);
                                 // Ajout d'une logique pour limiter la récursion
-                                if (attemptCount < maxRetries) { // Vous devez définir attemptCount et maxRetries
+                                if (attemptCount < maxRetries) {
                                     attemptCount++;
                                     console.log(attemptCount, " < ", maxRetries);
                                     resolve(askGifOllama(model, name_exercise, name_muscle_group));
@@ -299,7 +226,7 @@ async function askGifOllama(model, name_exercise, name_muscle_group) {
                     console.error('Erreur lors de l’analyse du chunk gif:', error.message);
                     console.log(attemptCount, " < ", maxRetries);
                     // Ajout d'une logique pour limiter la récursion
-                    if (attemptCount < maxRetries) { // Vous devez définir attemptCount et maxRetries
+                    if (attemptCount < maxRetries) {
                         attemptCount++;
                         console.log(attemptCount, " < ", maxRetries);
                         resolve(askGifOllama(model, name_exercise, name_muscle_group));
@@ -360,9 +287,6 @@ async function globalCall(messages, nb_exercice){
             newExerciseNames = workoutJson.map(exercise => exercise.exercise_name);
             ExerciseMuscleGroup = workoutJson.map(exercise => exercise.muscle_group);
 
-            console.log("Noms des exercices :", newExerciseNames);
-            console.log("Groupes musculaires :", ExerciseMuscleGroup);
-
             // Vérifier si tous les groupes musculaires sont valides
             rerun = false;
             for (let i = 0; i < ExerciseMuscleGroup.length; i++) {
@@ -385,21 +309,10 @@ async function globalCall(messages, nb_exercice){
             }
         } while (rerun === true);
 
-        console.log("Noms des exercices :", newExerciseNames);
-        console.log("Groupes musculaires :", ExerciseMuscleGroup);
-
         let gif_path_array = [];
         let gifPath ;
         let gifExist;
         for (let i = 0; i < newExerciseNames.length; i++) {
-            /*do{
-                gifPath = await askGifOllama('llama3', newExerciseNames[i], ExerciseMuscleGroup[i]);
-                gifExist = await isTrueGif(gifPath.gif_file, ExerciseMuscleGroup[i]);
-                console.log(newExerciseNames[i]);
-                console.log(ExerciseMuscleGroup[i]);
-                console.log(gifPath.gif_file);
-                console.log(gifExist);
-            }while(gifExist === false);*/
             gifPath = await askGifOllama('llama3', newExerciseNames[i], ExerciseMuscleGroup[i]);
             gifExist = await isTrueGif(gifPath.gif_file, ExerciseMuscleGroup[i]);
             if(gifExist === false){
@@ -407,9 +320,7 @@ async function globalCall(messages, nb_exercice){
             }
             gif_path_array.push(gifPath);
         }
-        console.log(gif_path_array)
 
-        console.log(workoutJson);
         return new Promise((resolve, reject) => {
             // Remplacer la valeur de gif_path dans workoutJson avec gif_file depuis gif_path_array
             for (let i = 0; i < workoutJson.length; i++) {
@@ -419,7 +330,6 @@ async function globalCall(messages, nb_exercice){
                     console.warn(`Aucun gif trouvé pour l'exercice : ${workoutJson[i].exercise_name}`);
                 }
             }
-            console.log("Workout JSON après mise à jour des gif_path :", workoutJson);
             resolve(workoutJson);
         });
     } catch (error) {
@@ -464,8 +374,6 @@ async function chatWithOllama(model, messages, nb_exercise) {
                 if (partialResponse.response && partialResponse.response !== "],") {
                     string_all_reponse += partialResponse.response; // Ajouter chaque morceau à la réponse complète
                 }
-
-                //console.log(partialResponse.response);
 
                 if (partialResponse.done) {
                     // Ajout de ']' si nécessaire
@@ -552,9 +460,6 @@ async function chatWithOllama(model, messages, nb_exercise) {
                     cleanedResponse = cleanedResponse.replace(/,\s*([a-zA-Z])/g, ',"$1');
                     cleanedResponse = cleanedResponse.replace(/:\s*([a-zA-Z])/g, ': "$1');
 
-                    //cleanedResponse = cleanedResponse.replace(/"gif_path"\s*:\s*"\s*([a-zA-Z])*\s*"\s*,/g, "\"gif_path\":\"\",");
-
-
 
                     const count_exercise = (cleanedResponse.match(/"exercise_name"/g) || []).length;
                     const count_sets = (cleanedResponse.match(/"sets"/g) || []).length;
@@ -575,7 +480,7 @@ async function chatWithOllama(model, messages, nb_exercise) {
                             console.error("Erreur de correspondance du nombre d'exercices :", err);
                             console.log(attemptCount, " < ", maxRetries);
                             // Ajout d'une logique pour limiter la récursion
-                            if (attemptCount < maxRetries) { // Vous devez définir attemptCount et maxRetries
+                            if (attemptCount < maxRetries) {
                                 attemptCount++;
                                 console.log(attemptCount, " < ", maxRetries);
                                 resolve(chatWithOllama(model, messages, nb_exercise));
@@ -593,7 +498,7 @@ async function chatWithOllama(model, messages, nb_exercise) {
                             console.error("Erreur lors du parsing JSON nettoyé :", err);
                             console.log(attemptCount, " < ", maxRetries);
                             // Ajout d'une logique pour limiter la récursion
-                            if (attemptCount < maxRetries) { // Vous devez définir attemptCount et maxRetries
+                            if (attemptCount < maxRetries) {
                                 attemptCount++;
                                 console.log(attemptCount, " < ", maxRetries);
                                 resolve(chatWithOllama(model, messages, nb_exercise));
