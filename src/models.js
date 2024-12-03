@@ -325,7 +325,7 @@ async function globalCall(messages, nb_exercice){
             // Remplacer la valeur de gif_path dans workoutJson avec gif_file depuis gif_path_array
             for (let i = 0; i < workoutJson.length; i++) {
                 if (gif_path_array[i] && gif_path_array[i].gif_file) {
-                    workoutJson[i].gif_path = 'https://raw.githubusercontent.com/MathisAulagnier/VirtualCoach/refs/heads/main/data/client/data/data_gifs/'+ExerciseMuscleGroup[i]+'/'+gif_path_array[i].gif_file; // Remplacement de la valeur
+                    workoutJson[i].gif_path = 'https://raw.githubusercontent.com/MathisAulagnier/VirtualCoach/refs/heads/main/data/data_gifs/'+ExerciseMuscleGroup[i]+'/'+gif_path_array[i].gif_file; // Remplacement de la valeur
                 } else {
                     console.warn(`Aucun gif trouvé pour l'exercice : ${workoutJson[i].exercise_name}`);
                 }
