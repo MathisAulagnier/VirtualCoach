@@ -88,10 +88,15 @@ app.post('/api/generate-training', async (req, res) => {
     delete userDataFile.formatPhoneNumber; // Supprime la clé formatPhoneNumber
     delete userDataFile.email;
     delete userDataFile.phoneNumber;
-
+    
+    if (userDataFile.age === ""){
+        userDataFile.age = "inconnu";
+    }
+    
     console.log(userDataFile);
-
+    
     fs.writeFileSync("user3.json", JSON.stringify(userDataFile, null, 4));
+
     userDataFile = "user3.json";
     const outputFile = 'training_plan_' + userDataFile.replace('.json', '') + '.json';
 
