@@ -1,0 +1,242 @@
+{
+    "seance1": {
+        "warmup": [
+            {
+                "exercise_name": "Walking Lunges",
+                "sets": "3",
+                "repetitions": "10",
+                "rest_time": "60",
+                "gif_path": "data_gifs/Legs/squat-pistol.gif",
+                "muscle_group": "Legs"
+            },
+            {
+                "exercise_name": "Bodyweight Squats",
+                "sets": "2",
+                "repetitions": "15",
+                "rest_time": "60",
+                "gif_path": "data_gifs/Legs/air-squat.gif",
+                "muscle_group": "Legs"
+            },
+            {
+                "exercise_name": "Plank Hold",
+                "sets": "3",
+                "repetitions": "30",
+                "rest_time": "60",
+                "gif_path": "data_gifs/Abs/planche-abdos-swiss-ball.gif",
+                "muscle_group": "Abs"
+            }
+        ],
+        "workouts": [
+            {
+                "exercise_name": "Push-ups",
+                "sets": "3",
+                "repetitions": "12",
+                "rest_time": "60",
+                "gif_path": "data_gifs/Chest/chest-press-avec-sangles-suspension.gif",
+                "muscle_group": "Chest"
+            },
+            {
+                "exercise_name": "Lunges",
+                "sets": "3",
+                "repetitions": "12",
+                "rest_time": "60",
+                "gif_path": "data_gifs/Legs/lunge.gif",
+                "muscle_group": "Legs"
+            },
+            {
+                "exercise_name": "Dumbbell Shoulder Press",
+                "sets": "3",
+                "repetitions": "8",
+                "rest_time": "60",
+                "gif_path": "data_gifs/Shoulder/developpe-epaules-assis-dumbbell-z-press.gif",
+                "muscle_group": "Shoulder"
+            }
+        ],
+        "stretch": [
+            {
+                "exercise_name": "Downward-Facing Dog",
+                "sets": "1",
+                "repetitions": "30",
+                "rest_time": "0",
+                "gif_path": "data_gifs/Stretching/bird-dog.gif",
+                "muscle_group": "Stretching"
+            },
+            {
+                "exercise_name": "Hammer Stretch",
+                "sets": "1",
+                "repetitions": "30",
+                "rest_time": "0",
+                "gif_path": "data_gifs/Shoulder/unknown.gif",
+                "muscle_group": "Shoulder"
+            },
+            {
+                "exercise_name": "Seated Forward Fold",
+                "sets": "1",
+                "repetitions": "30",
+                "rest_time": "0",
+                "gif_path": "data_gifs/Back/bent-over-row-avec-halteres.gif",
+                "muscle_group": "Back"
+            }
+        ]
+    },
+    "seance2": {
+        "warmup": [
+            {
+                "exercise_name": "Walking Lunges",
+                "sets": "3",
+                "repetitions": "10",
+                "rest_time": "60",
+                "gif_path": "data_gifs/Legs/squat-pistol.gif",
+                "muscle_group": "Legs"
+            },
+            {
+                "exercise_name": "Bodyweight Squats",
+                "sets": "2",
+                "repetitions": "15",
+                "rest_time": "60",
+                "gif_path": "data_gifs/Legs/air-squat.gif",
+                "muscle_group": "Legs"
+            },
+            {
+                "exercise_name": "Plank Hold",
+                "sets": "3",
+                "repetitions": "30",
+                "rest_time": "60",
+                "gif_path": "data_gifs/Abs/planche-abdos-swiss-ball.gif",
+                "muscle_group": "Abs"
+            }
+        ],
+        "workouts": [
+            {
+                "exercise_name": "Bent-Over Row",
+                "sets": "3",
+                "repetitions": "12",
+                "rest_time": "60",
+                "gif_path": "data_gifs/Back/bent-over-row-avec-halteres.gif",
+                "muscle_group": "Back"
+            },
+            {
+                "exercise_name": "Tricep Dip",
+                "sets": "3",
+                "repetitions": "15",
+                "rest_time": "60",
+                "gif_path": "data_gifs/Triceps/dips-triceps.gif",
+                "muscle_group": "Triceps"
+            },
+            {
+                "exercise_name": "Seated Leg Curl",
+                "sets": "3",
+                "repetitions": "12",
+                "rest_time": "60",
+                "gif_path": "data_gifs/Legs/leg-curl-assis-machine.gif",
+                "muscle_group": "Legs"
+            }
+        ],
+        "stretch": [
+            {
+                "exercise_name": "Downward-Facing Dog",
+                "sets": "1",
+                "repetitions": "30",
+                "rest_time": "0",
+                "gif_path": "data_gifs/Stretching/bird-dog.gif",
+                "muscle_group": "Stretching"
+            },
+            {
+                "exercise_name": "Hammer Stretch",
+                "sets": "1",
+                "repetitions": "30",
+                "rest_time": "0",
+                "gif_path": "data_gifs/Shoulder/unknown.gif",
+                "muscle_group": "Shoulder"
+            },
+            {
+                "exercise_name": "Seated Forward Fold",
+                "sets": "1",
+                "repetitions": "30",
+                "rest_time": "0",
+                "gif_path": "data_gifs/Back/bent-over-row-avec-halteres.gif",
+                "muscle_group": "Back"
+            }
+        ]
+    },
+    "seance3": {
+        "warmup": [
+            {
+                "exercise_name": "Walking Lunges",
+                "sets": "3",
+                "repetitions": "10",
+                "rest_time": "60",
+                "gif_path": "data_gifs/Legs/squat-pistol.gif",
+                "muscle_group": "Legs"
+            },
+            {
+                "exercise_name": "Bodyweight Squats",
+                "sets": "2",
+                "repetitions": "15",
+                "rest_time": "60",
+                "gif_path": "data_gifs/Legs/air-squat.gif",
+                "muscle_group": "Legs"
+            },
+            {
+                "exercise_name": "Plank Hold",
+                "sets": "3",
+                "repetitions": "30",
+                "rest_time": "60",
+                "gif_path": "data_gifs/Abs/planche-abdos-swiss-ball.gif",
+                "muscle_group": "Abs"
+            }
+        ],
+        "workouts": [
+            {
+                "exercise_name": "Bent-Arm Raise",
+                "sets": "3",
+                "repetitions": "12",
+                "rest_time": "60",
+                "gif_path": "data_gifs/Shoulder/developpe-epaule-halteres.gif",
+                "muscle_group": "Shoulder"
+            },
+            {
+                "exercise_name": "Seated Leg Extension",
+                "sets": "3",
+                "repetitions": "15",
+                "rest_time": "60",
+                "gif_path": "data_gifs/Legs/leg-extension-exercice-musculation.gif",
+                "muscle_group": "Legs"
+            },
+            {
+                "exercise_name": "Core Rotation",
+                "sets": "3",
+                "repetitions": "12",
+                "rest_time": "60",
+                "gif_path": "data_gifs/Abs/rotation-buste-elastique-pallof-press.gif",
+                "muscle_group": "Abs"
+            }
+        ],
+        "stretch": [
+            {
+                "exercise_name": "Downward-Facing Dog",
+                "sets": "1",
+                "repetitions": "30",
+                "rest_time": "0",
+                "gif_path": "data_gifs/Stretching/bird-dog.gif",
+                "muscle_group": "Stretching"
+            },
+            {
+                "exercise_name": "Hammer Stretch",
+                "sets": "1",
+                "repetitions": "30",
+                "rest_time": "0",
+                "gif_path": "data_gifs/Shoulder/unknown.gif",
+                "muscle_group": "Shoulder"
+            },
+            {
+                "exercise_name": "Seated Forward Fold",
+                "sets": "1",
+                "repetitions": "30",
+                "rest_time": "0",
+                "gif_path": "data_gifs/Back/bent-over-row-avec-halteres.gif",
+                "muscle_group": "Back"
+            }
+        ]
+    }
+}

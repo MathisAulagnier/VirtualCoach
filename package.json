@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-{}
-=======
 {
   "name": "virtualcoach",
   "version": "1.0.0",
@@ -19,4 +16,3 @@
     "path": "^0.12.7"
   }
 }
->>>>>>> ed3187f1d0f1b0ebb600e7f18d7a1a6a59c813d6
