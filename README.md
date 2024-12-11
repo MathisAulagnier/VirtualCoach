@@ -103,7 +103,7 @@ ollama run llama3
 $env:OLLAMA_HOST="0.0.0.0"
 ```
 
-4. Lancer le serveur Ollama en local
+5. Lancer le serveur Ollama en local
 
 ```bash
 ollama serve
@@ -120,18 +120,23 @@ exemple : "cd  .\OneDrive\Documents\projetIA\src"
 cd Chemin_du_fichier
 ```
 
-2. Créer le dossier node_modules
+2. Installer Node
+
+```bash
+winget install Schniz.fnm
+fnm env --use-on-cd | Out-String | Invoke-Expression
+fnm use --install-if-missing 23
+```
+
+3. Créer le dossier node_modules
 
 ```bash
 npm init -y
 npm install express axios cors path
 ```
 
-3. lancer le fichier app.js
+4. lancer le fichier app.js
 
 ```bash
-winget install Schniz.fnm
-fnm env --use-on-cd | Out-String | Invoke-Expression
-fnm use --install-if-missing 23
 node app.js
 ```
