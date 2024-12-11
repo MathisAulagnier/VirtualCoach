@@ -1,17 +1,26 @@
 import React, { useState } from "react";
 import { ActivityIndicator, Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import Button from "../components/Button";
 import { SIZES } from "../../constants/styles";
 import { Colors } from "../../constants/Colors";
+import { useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 
 export default CreateGoal = () => {
 
     const [loading, setLoading] = useState(false);
+    const reduxUserData = useSelector((state) => state.global.userData);
+
+    const navigation = useNavigation();
+
+    console.log("CreateGoal");
+    console.log(reduxUserData);
+    console.log("CreateGoal");
+    
 
     const handleCreateGoal = async () => {
         try {
             setLoading(true)
-            const userDataFile = 'user3.json'; // Nom du fichier utilisateur
+            const userDataFile = reduxUserData; // Nom du fichier utilisateur
             const response = await fetch('http://192.168.0.175:4000/api/generate-training', {
                 method: 'POST',
                 headers: {
@@ -26,9 +35,12 @@ export default CreateGoal = () => {
             }
             console.log('Plan d\'entraînement généré avec succès:', data);
             setLoading(false)
+            Alert.alert(" Success!", "Training plan generated successfully")
+            navigation.replace("Home")
         } catch (error) {
             console.error('Erreur:', error.message);
             setLoading(false)
+            Alert.alert("Network error !", "Please try again")
         }
     };
 

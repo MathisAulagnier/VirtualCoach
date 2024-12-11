@@ -1,13 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FlatList, StyleSheet, View, Animated, ActivityIndicator } from "react-native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import UserInfosSlideItem from "../../components/UserInfosSlideItem";
 import NextBtnPaginator from "../../components/NextBtnPaginator";
 import NextBtn from "../../components/NextBtn";
 import slidesUserInfo from "../../../constants/slidesUserInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserData } from "../../../hooks/globalSlice";
-import UserInfoStepTwo from "../UserInfoStepTwo";
 import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../../../constants/Colors";
 
@@ -19,6 +17,7 @@ export default function PerformanceStepOne() {
     const [user, setUser] = useState(reduxUserData);
     const [loading, setLoading] = useState(true);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [isScrolling, setIsScrolling] = useState(false);
     
     const scrollX = useRef(new Animated.Value(0)).current;
     const slideRef = useRef(null);
@@ -35,16 +34,48 @@ export default function PerformanceStepOne() {
         }
     }).current;
 
-    const scrollTo = async () => {
+    const saveObjectWorkoutSpec = async (nbrWorkout, timeWorkout) => {
+        try {
+          dispatch(setUserData({
+            ...reduxUserData,
+            nbrWorkout: nbrWorkout,
+            timeWorkout: timeWorkout,
+        }));
+        } catch (error) {
+            console.log('Error saving data workout spec: ', error);
+        }
+    };
+
+    const saveObjectCurrentStrength = async (bodyWeightSquat, pushUp, pullUp) => {
+        try {
+          dispatch(setUserData({
+            ...reduxUserData,
+            upper: (pushUp < 10 || pullUp < 3) ? 0 : 1,
+            lower: bodyWeightSquat < 10 ? 0 : 1,		
+        }));
+        } catch (error) {
+            console.log('Error saving data current strength:', error);
+        }
+    };
+
+    const scrollTo = async (nbrWorkout, timeWorkout, bodyWeightSquat, pushUp, pullUp) => {
+        // if (isScrolling) return;
+        // setIsScrolling(true);
+        console.log("scrollTo appelé avec les paramètres :::: ", nbrWorkout, timeWorkout, bodyWeightSquat, pushUp, pullUp);
         if (user.imc > 30) {
-            navigation.navigate("Home");
+            navigation.replace("CreateGoal");
         } else {
             if (currentIndex < slidesUserInfo.length - 1) {
+                if (nbrWorkout && timeWorkout) {
+                    saveObjectWorkoutSpec(nbrWorkout, timeWorkout)
+                }
                 slideRef.current.scrollToIndex({ index: currentIndex + 1 });
             } else {
-                navigation.navigate("StepTreeView");
+                saveObjectCurrentStrength(bodyWeightSquat, pushUp, pullUp)
+                navigation.replace("Endurance", {cardio : bodyWeightSquat, route: "performance"});
             }
         }
+        // setIsScrolling(false);
     };
 
     if (loading) {
@@ -63,13 +94,13 @@ export default function PerformanceStepOne() {
                 <View style={{ flex: 8 }}>
                     <FlatList
                         data={slidesUserInfo}
-                        renderItem={({ item }) => <UserInfosSlideItem item={item} />}
+                        renderItem={({ item }) => <UserInfosSlideItem item={item} navigation={navigation} scrollTo={scrollTo}/>}
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         scrollEnabled={true}
                         pagingEnabled
                         bounces={false}
-                        keyExtractor={(item) => item.id.toString()} // Assurez-vous que `item.id` est une chaîne
+                        keyExtractor={(item) => item.id.toString()}
                         onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], {
                             useNativeDriver: false,
                         })}

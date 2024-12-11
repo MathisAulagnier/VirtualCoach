@@ -17,18 +17,18 @@ export default Register = (props) => {
     const [texte, setTexte] = useState('');
 
     const [user, setUser] = useState({
-        username: '',
+        name: '',
         email: '',
         phoneNumber: '',
         formatPhoneNumber: '',
     }); 
 
-    console.log('Register : ',user.username, user.phoneNumber, user.formatPhoneNumber, user.email);
+    console.log('Register : ',user.name, user.phoneNumber, user.formatPhoneNumber, user.email);
     
 
     const checkTextInput = () => {
-        if (!user.username) {
-          Alert.alert("Alert !", "Please enter a Username to continue.")
+        if (!user.name) {
+          Alert.alert("Alert !", "Please enter a name to continue.")
           return;
         }
         props.onSubmit(user)
@@ -54,11 +54,11 @@ export default Register = (props) => {
             <ScrollView>
                 <View style={styles.container}>
                     <Text style={{ color: Colors.black, textAlign: 'center', marginTop: 50, fontSize: 30, fontWeight: '700' }}>Sign up</Text>
-                    <Text style={{ fontSize: 17, color: Colors.black, alignSelf: 'center', marginTop: 25, marginBottom: 50, textAlign: 'center' }} >MyCoach will need to verify your phone number.</Text>
+                    <Text style={{ fontSize: 17, color: Colors.black, alignSelf: 'center', marginTop: 25, marginBottom: 50, textAlign: 'center' }} >Please fill in the following information.</Text>
                     <View style={{}} >
-                        <InputIcon placeholder={"Enter your user name"} require={"*"} name={"account-circle"} label={"User name"} value={user.username}
+                        <InputIcon placeholder={"Enter your user name"} require={"*"} name={"account-circle"} label={"User name"} value={user.name}
                             onChangeText={(value) => {
-                                setUser({...user, username: value})
+                                setUser({...user, name: value})
                             }}
                         />
                     </View>
@@ -88,7 +88,7 @@ export default Register = (props) => {
                                 
                             }}
                             countryPickerProps={{ withAlphaFilter: true }}
-                            autoFocus
+                            // autoFocus
                             textInputProps={{
                                 maxLength: 10,
                             }}
@@ -101,7 +101,7 @@ export default Register = (props) => {
                     }}
                     />
                     <View style={{ flexDirection: 'column', maxWidth: SIZES.width, justifyContent: 'space-between', alignItems: "center" }} >
-                        <Text style={{ fontSize: 14.5, }} >By logging in, you agree to the </Text>
+                        <Text style={{ fontSize: 14.5, }} >By logging in, you agree to our </Text>
                         <TouchableOpacity
                         // onPress={() => 
                         //   navigation.navigate('Login')

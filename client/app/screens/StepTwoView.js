@@ -1,42 +1,51 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import InputIcon from "../components/InputIcon";
+import InputDropdown from "../components/InputDropdown";
 
 export default StepTwoView = (props) => {
+
+    const bodyWeightSquatArray = Array.from({ length: 196 }, (_, i) =>4 + i + 1).map(items => ({
+        label: items.toString(),
+        value: items
+    }));
+    const pushUpArray = Array.from({ length: 196 }, (_, i) =>4 + i + 1).map(items => ({
+        label: items.toString(),
+        value: items
+    }));
+
+    const pullUpArray = Array.from({ length: 50}, (_, i) =>0 + i + 1).map(items => ({
+        label: items.toString(),
+        value: items
+    }));
 
     const  {navigation} = props;
     return (
         <View style={styles.container} >
-            <InputIcon label={"How many bodweight squat can you do ?"} 
+            <InputDropdown label={"How many bodyweight squats can you do ?"} 
                 style={{marginVertical: 10}} 
                 placeholder= {"0"}
-                keyboardType= {"numeric"}
-                value={props.value} 
-                maxLength={2}
+                value={props.value.bodyWeightSquat} 
                 onFocus={props.onFocus} 
-                onTextInput={props.onTextInput}
-                onChangeText={props.onChangeTextBW}
+                onValueChange={props.onChangeTextBW}
+                data={bodyWeightSquatArray}
             />
-            <InputIcon label={"How many push-up can you do ?"} 
+            <InputDropdown label={"How many push-ups can you do ?"} 
                 style={{marginVertical: 10}}
                 placeholder= {"0"}
-                keyboardType= {"numeric"}
-                value={props.value} 
-                maxLength={2}
+                value={props.value.pushUp} 
                 onFocus={props.onFocus} 
-                onTextInput={props.onTextInput}
-                onChangeText={props.onChangeTextPshUp}
+                onValueChange={props.onChangeTextPshUp}
+                data={pushUpArray}
                 
             />
-            <InputIcon label={"How many pull-ups can you do ?"} 
+            <InputDropdown label={"How many pull-ups can you perform ?"} 
                 style={{marginVertical: 10}}
                 placeholder= {"0"}
-                keyboardType= {"numeric"}
-                value={props.value} 
-                maxLength={2}
+                value={props.value.pullUp} 
                 onFocus={props.onFocus} 
-                onTextInput={props.onTextInputPllup}
-                onChangeText={props.onChangeText}
+                onValueChange={props.onChangeText}
+                data={pullUpArray}
             />
         </View>
     )

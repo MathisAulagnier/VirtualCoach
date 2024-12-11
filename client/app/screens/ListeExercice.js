@@ -1,66 +1,61 @@
-import React from "react";
+import React, { useState } from "react";
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { Image } from 'expo-image';
+import { Image, useImage } from 'expo-image';
 import { SIZES } from "../../constants/styles";
 import { Colors } from "../../constants/Colors";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import InputSearch from "../components/InputSearch";
 import { Ionicons } from "@expo/vector-icons";
+import CustomImage from "../components/CustomImage";
 
 export default ListeExercice = () => {
 
     const navigation = useNavigation();
 
-    const gifData = [
-        require('../../data/gifs/crunch-avec-jambes-verticales.gif'),
-        require('../../data/gifs/crunch-machine-abdos.gif'),
-        require('../../data/gifs/crunch-papillon-butterfly-sit-ups.gif'),
-        require('../../data/gifs/crunch-sangle-suspension-trx.gif'),
-        require('../../data/gifs/curl-allonge-a-la-poulie.gif'),
-        require('../../data/gifs/curl-au-pupitre-barre-ez-larry-scott.gif'),
-        require('../../data/gifs/curl-avec-elastique.gif'),
-        require('../../data/gifs/curl-barre.gif'),
-        require('../../data/gifs/curl-biceps-avec-halteres-alterne-assis.gif'),
-        require('../../data/gifs/curl-biceps-poulie-basse.gif')
-    ]
+    const imagePath = '../../data/data_gifs/Shoulder/dumbbell-external-shoulder-rotation.gif';
+
+    // const imageSource = require(imagePath);
+        
 
     const route = useRoute();
+    const [data, setData] = useState(route.params.data);
 
 
     return (
-        <View style={{ width: SIZES.width, flex: 1}} >
+        <View style={{ width: SIZES.width, flex: 1, backgroundColor: Colors.whitesmoke2,}} >
             <View style={{ paddingTop: 15, paddingHorizontal: 8, flex: 0.15}}>
-                <Text style={{ fontSize: 20, fontWeight: '700', color: Colors.blueb, paddingBottom: 8, }}>{route.params.data}</Text>
+                <Text style={{ fontSize: 20, fontWeight: '700', color: Colors.blueb, paddingBottom: 8, }}>{route.params.name}</Text>
                 <View style={{ }} >
-                    <InputSearch />
+                    <InputSearch style= {{backgroundColor: Colors.whitesmoke,}}/>
                 </View>
             </View>
             <ScrollView style={{ width: SIZES.width, flex: 0.8 }} >
                 <View style={styles.cardsView} >
-                    {gifData.map((item, index) => (
+                    {data.map((item, index) => (
                         <TouchableOpacity style={styles.cardButton} key={index}
                             onPress={() => {
+                                console.log((item.gif_path).toString());
+                                
                                 navigation.navigate("DetailsExercice", {
-                                    imgUrl: item,
-                                    exerciseName: route.params.data
+                                    data: item,
                                 })
                             }}
                         >
                             <View style={{ borderTopEndRadius: 8, }} >
                                 {/* <Image source={{ uri: 'https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif' }} style={styles.gif}/> */}
                                 <Image
-                                    source={item}
+                                    // source={require((item.gif_path).toString())}
+                                    source={{ uri: item.gif_path }}
                                     style={styles.gif}
                                     resizeMethod="auto"
-                                    resizeMode="contain"
+                                    contentFit="contain"
                                 />
+                                {/* <CustomImage imagePath={"https://github.com/MathisAulagnier/VirtualCoach/blob/main/data/data_gifs/Shoulder/front-raises.gif"} style={styles.gif}/> */}
                             </View>
                             <View style={{ justifyContent: 'center', alignItems: 'center', paddingVertical: 10 }} >
-                                <Text style={{ fontSize: 15, fontWeight: '600', }} >{route.params.data && route.params.data.length > 18 ? route.params.data.substring(0, 18) +'...' : route.params.data}</Text>
-                                <Text style={{ fontSize: 14, fontWeight: '400', color: Colors.green, paddingTop: 10}}>Sets/Reps</Text>
+                                <Text style={{ fontSize: 14, fontWeight: '400', color: Colors.green, paddingTop: 10}}>{item.exercise_name}</Text>
                                 <View style={{flexDirection: "row", alignItems: "center",}}>
-                                    {/* <Ionicons name="flash" size={20} color={Colors.red} /> */}
-                                    <Text style={{fontSize: 15, fontWeight: "400", padding: 5, color: Colors.blueb }}>3/20</Text>
+                                    <Text style={{fontSize: 16, fontWeight: "400", padding: 5, color: Colors.blueb }}>Sets : {item.sets}</Text>
                                 </View>
                             </View>
                         </TouchableOpacity>

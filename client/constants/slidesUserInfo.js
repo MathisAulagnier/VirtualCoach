@@ -2,7 +2,7 @@ export default [
     {
         id : 1,
         title : "Your healthy training adventure starts here.",
-        description : "What results do you expect from training ?",
+        description : "What results do you expect from your training ?",
         step_one: [
             "Rehabilitate After an Injury",
             "Lose Weight",
@@ -18,14 +18,14 @@ export default [
     },
     {
         id : 2,
-        title : "Workout per week",
+        title : "Workouts per week",
         description : "",
         nb_workout_step: true
     },
     {
         id : 3,
-        title : "Current Strength",
-        description : "Description of your current strength",
+        title : "Current Strength Level",
+        description : "Please provide the number of bodyweight squats, push-ups, and pull-ups you can perform.",
         step_two: true,
     },
 ]

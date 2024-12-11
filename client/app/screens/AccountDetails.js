@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, View, TextInput, TouchableOpacity, ToastAndroid, ActivityIndicator } from 'react-native'
+import { ScrollView, StyleSheet, Text, View, TextInput, TouchableOpacity, ToastAndroid, ActivityIndicator, Alert } from 'react-native'
 import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
@@ -8,10 +8,12 @@ import { Colors } from '../../constants/Colors'
 import { Entypo, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import { SIZES } from '../../constants/styles'
 import InputIcon from '../components/InputIcon'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { setUserData } from '../../hooks/globalSlice'
 
 const AccountDetails = (props) => {
 
+    const dispatch = useDispatch();
     const reduxUserData = useSelector((state) => state.global.userData);
     const [user, setUser] = useState(reduxUserData);
 
@@ -23,8 +25,9 @@ const AccountDetails = (props) => {
 
 
     let userData = {
-        username: "",
+        name: "",
         phoneNumber: "",
+        formatPhoneNumber: "",
         email: "",
         weight: "",
         sexe: null,
@@ -52,13 +55,34 @@ const AccountDetails = (props) => {
     };
 
     async function checkTextInput (){
-        if (!userInfo.username.trim()) {
+        if (!userInfo.name.trim()) {
             setRequireUsername(true)            
             return;
         }
         setRequireUsername(false);
         setLoading(true)
+        console.log(userInfo);
         
+        try {
+            dispatch(setUserData({
+                ...reduxUserData,
+                name: userInfo.name,
+                formatPhoneNumber: userInfo.phoneNumber,
+                phoneNumber: userInfo.phoneNumber,
+                email: userInfo.email,
+                weight: userInfo.weight,
+                sexe: userInfo.sexe,
+                height: userInfo.height,
+                age: userInfo.age,
+                imc: (userInfo.weight/(userInfo.height*userInfo.height))
+            }));
+            setLoading(false)
+            Alert.alert("Success !", "Updated successfully ")
+        } catch (error) {
+            console.log('Error saving data workout spec:', error);
+            setLoading(false)
+        }
+
     };
 
 
@@ -74,23 +98,22 @@ const AccountDetails = (props) => {
                 />
             ) : (
         <ScrollView>
-            <View>
-                <Text style={{fontWeight: '600', paddingVertical: 20, fontSize: 18, color: Colors.blueb,}} >My personal information</Text>
-                <InputIcon style={{backgroundColor: Colors.whitesmoke2}} placeholder={"Username"} name={"person"} label={"Username"} requireInput={requireUsername} value={userInfo.username} 
+            <View style={{paddingHorizontal: 8}}>
+                <Text style={{fontWeight: '600', paddingVertical: 20, fontSize: 18, color: Colors.blueb,}} >Personal information</Text>
+                <InputIcon style={{backgroundColor: Colors.whitesmoke2}} placeholder={"User name"} name={"person"} label={"Username"} requireInput={requireUsername} value={userInfo.name} 
                     onChangeText={(value) =>{
-                        setUserInfo({...userInfo, username : value})
+                        setUserInfo({...userInfo, name : value})
                         setRequireUsername(false);
                     }}
                 />
                 <InputIcon style={{backgroundColor: Colors.whitesmoke2}} placeholder={"Phone"} name={"call"} label={"Phone number"} keyboardType={'phone-pad'} value={userInfo.formatPhoneNumber}
                     onChangeText={(value) =>{
-                        setUserInfo({...userInfo, phoneNumber : value})
+                        setUserInfo({...userInfo, formatPhoneNumber : value})
                     }}
                 />
                 <InputIcon style={{backgroundColor: Colors.whitesmoke2}} placeholder={"Email"} name={"email"} label={"Email"} requireInput={requireUsername} value={userInfo.email} 
                     onChangeText={(value) =>{
                         setUserInfo({...userInfo, email : value})
-                        setRequireUsername(false);
                     }}
                 />
                 <View style={{}} >
@@ -115,7 +138,7 @@ const AccountDetails = (props) => {
                             <MaterialCommunityIcons name={"human-male-height"} size={20} color={Colors.grey} style={{marginLeft: 6}} />
                             <TextInput style={styles.input} placeholderTextColor={Colors.grey} placeholder={'82'} keyboardType={'numeric'} value={userInfo.height}  
                                 onChangeText={(value) =>{
-                                    setUserInfo({...userInfo, taille : value})
+                                    setUserInfo({...userInfo, height : value})
                                 }}
                             />
                             <Text 
@@ -156,9 +179,11 @@ const AccountDetails = (props) => {
                     // value={moment(date).format('ll')} 
                     value={userInfo.age}
                     onFocus={() => setOpen(true)} 
-                    // onTextInput={() => setOpen(true)}
+                    onChangeText={(value) =>{
+                        setUserInfo({...userInfo, age : value})
+                    }}
                 />                 
-                <View>
+                {/* <View>
                     <Text style={{fontWeight: '600', paddingVertical: 20, fontSize: 18, color: Colors.red,}}> My babits</Text>
                     <View style={styles.switchView} >
                         <View style={{flexDirection: 'row', alignItems: 'center',}} >
@@ -193,7 +218,7 @@ const AccountDetails = (props) => {
                             value={userInfo.myHabits?.tobacco}
                         />
                     </View>
-                </View>
+                </View> */}
                 <Button title="Save" animate={loading} disabled={loading} styleView ={styles.styleViewb} handleb={() => 
                     {
                         checkTextInput()
@@ -212,7 +237,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: Colors.whitesmoke,
-        padding: 8,
+        paddingVertical: 8,
     },
     viewInput:{
         flexDirection: 'row',

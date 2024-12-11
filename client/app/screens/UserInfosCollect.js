@@ -12,7 +12,7 @@ import UserInfoStepTwo from "./UserInfoStepTwo";
 import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../../constants/Colors";
 
-export default function UserInfosCollect() {
+export default function UserInfosCollect({ props }) {
     const navigation = useNavigation();
     const dispatch = useDispatch();
 
@@ -32,22 +32,16 @@ export default function UserInfosCollect() {
 
         if(launched == null || false) {
             setIsAlreadyLaunchedHome(false);
+            setLoading(false)
         } else {
             setIsAlreadyLaunchedHome(true);
+            setLoading(false)
         }
-        console.log('////////////////////////', JSON.parse(launched), "--------------------", isAlreadyLaunchedHome);
-        setLoading(false)
     };
 
     useEffect(() => {
         setUser(reduxUserData);
     }, [reduxUserData]);
-
-    // Mettre à jour les données utilisateur dans Redux
-    const changeData = () => {
-        const newUserData = { name: "John Doe", age: 30 };
-        dispatch(setUserData(newUserData));
-    };
 
     useEffect(() => {
         AlreadyLaunchedHome();
@@ -60,14 +54,45 @@ export default function UserInfosCollect() {
         }
     }).current;
 
-    const scrollTo = async () => {
+    const saveObjectWorkoutSpec = async (nbrWorkout, timeWorkout) => {
+        try {
+          dispatch(setUserData({
+            ...reduxUserData,
+            nbrWorkout: nbrWorkout,
+            timeWorkout: timeWorkout,
+        }));
+        } catch (error) {
+            console.log('Error saving data workout spec:', error);
+        }
+    };
+
+    const saveObjectCurrentStrength = async (bodyWeightSquat, pushUp, pullUp) => {
+        try {
+          dispatch(setUserData({
+            ...reduxUserData,
+            upper: (pushUp < 10 || pullUp < 3) ? 0 : 1,
+            lower: (bodyWeightSquat < 10) ? 0 : 1,		
+        }));
+        } catch (error) {
+            console.log('Error saving data current strength:', error);
+        }
+    };
+
+    const scrollTo = async (nbrWorkout, timeWorkout, bodyWeightSquat, pushUp, pullUp) => {
+        console.log("/n");
+        console.log("################################################################scrolllllll");
+        
         if (user.imc > 30) {
             navigation.navigate("Home");
         } else {
             if (currentIndex < slidesUserInfo.length - 1) {
+                if (nbrWorkout && timeWorkout) {
+                    saveObjectWorkoutSpec(nbrWorkout, timeWorkout)
+                }
                 slideRef.current.scrollToIndex({ index: currentIndex + 1 });
             } else {
-                navigation.navigate("StepTreeView");
+                saveObjectCurrentStrength(bodyWeightSquat, pushUp, pullUp)
+                navigation.navigate("Endurance", {cardio : bodyWeightSquat});
             }
         }
     };
@@ -101,7 +126,7 @@ export default function UserInfosCollect() {
                     <View style={{ flex: 8 }}>
                         <FlatList
                             data={slidesUserInfo}
-                            renderItem={({ item }) => <UserInfosSlideItem item={item} />}
+                            renderItem={({ item }) => <UserInfosSlideItem item={item} navigation={navigation} scrollTo={scrollTo} />}
                             horizontal
                             showsHorizontalScrollIndicator={false}
                             scrollEnabled={true}

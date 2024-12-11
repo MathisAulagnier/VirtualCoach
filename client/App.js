@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { LogBox, StyleSheet, Text, View } from 'react-native';
 import Main from './app/Main';
 import { Provider } from 'react-redux';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,7 +12,7 @@ import { Colors } from './constants/Colors';
 
 export default function App() {
 
-  // LogBox.ignoreAllLogs(); // Ignore all warningsé
+  LogBox.ignoreAllLogs(); // Ignore all warningsé
 
 
   const dispatch = useDispatch();

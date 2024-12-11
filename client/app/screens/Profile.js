@@ -1,14 +1,28 @@
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
-import { Divider } from 'react-native-paper'
+import React, { useState } from 'react'
+import { ActivityIndicator, Divider } from 'react-native-paper'
 import { EvilIcons, Ionicons } from '@expo/vector-icons'
 import { Colors } from '../../constants/Colors'
 import { SIZES } from '../../constants/styles'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useNavigation } from '@react-navigation/native'
 
-export default Profile = ({navigation}) => {
+export default Profile = ({}) => {
     const icon = 'chevron-forward'
     const size = 22
-  return (
+    const [loading, setLoading] = useState(false);
+    const navigation = useNavigation();
+
+
+  return loading ? (
+    <ActivityIndicator
+        visible={loading}
+        textContent={'Loading...'}
+        size='large'
+        color={Colors.blueb}
+        style= {{alignItems: 'center', justifyContent: 'center', flex: 1, backgroundColor: Colors.white,}}
+        />
+    ) : (
     <SafeAreaView style={ styles.Container } >
         <ScrollView>
             <Text style={ [styles.title, {paddingTop: 20,}] } >General</Text>
@@ -104,7 +118,24 @@ export default Profile = ({navigation}) => {
             </View>
 
             <View >
-                <TouchableOpacity style={styles.view} >
+                <TouchableOpacity style={styles.view} 
+                    onPress= {
+                        async () => {
+                            // try {
+                            //     setLoading(true)
+                            //     await AsyncStorage.removeItem("isAlreadyLaunchedHome");
+                            //     // await AsyncStorage.removeItem("isAlreadyLaunched");
+                            //     await AsyncStorage.removeItem("login");
+                            //     await AsyncStorage.removeItem("@userData");
+                            //     navigation.replace("UserInfosCollect")
+                            //     setLoading(false)
+                            // } catch (error) {
+                            //     console.log("Error @isAlreadyLaunched: ",error);
+                            //     setLoading(false)
+                            // }
+                        }
+                    }
+                >
                     <Text style={{
                         color: Colors.white,
                         padding: 20,
@@ -157,7 +188,7 @@ const styles = StyleSheet.create({
     view:{
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.blue,
         marginVertical: 25,
         borderRadius: 5,
         flexDirection: 'row',

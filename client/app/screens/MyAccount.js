@@ -31,10 +31,10 @@ export default MyAccount = ({navigation}) => {
                 <Ionicons name='pencil-sharp' size={25} color={Colors.blue} style={{}} />
             </TouchableOpacity>
         </View>
-        
-        <View style={{alignSelf: 'center', padding: 10}} >
-            <Text style={{fontWeight: '700'}} >{reduxUserData?.username}</Text>
-            <Text style={{fontWeight: '400', alignSelf: 'center'}} >{reduxUserData?.phoneNumber}</Text>
+    
+        <View style={{alignSelf: 'center', alignItems: "center", marginLeft: -20, justifyContent: "center", padding: 10,}} >
+            <Text style={{fontWeight: '700'}} >{reduxUserData?.name}</Text>
+            <Text style={{fontWeight: '400', alignSelf: 'center'}} >{reduxUserData?.formatPhoneNumber}</Text>
         </View>        
         <ScrollView>
             <View style={{padding: 10, flex: 1,}}>
@@ -44,7 +44,7 @@ export default MyAccount = ({navigation}) => {
                     }
                 >
                     <Ionicons name='folder-open-outline' size={25} color={Colors.yellow} style={styles.listIcon} />
-                    <Text style={styles.itemsText}>My personal information</Text>
+                    <Text style={styles.itemsText}>Personal information</Text>
                 </TouchableOpacity>
                 <TouchableOpacity disabled style={[styles.items, {backgroundColor: Colors.whitesmoke2}]} 
                     onPress= {
@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 10,
+        justifyContent: "center",
         backgroundColor: Colors.whitesmoke,
     },
     items: {

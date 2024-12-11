@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Alert, StyleSheet, Text, Touchable, TouchableOpacity, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { SIZES } from "../../constants/styles";
 import { Colors } from "../../constants/Colors";
@@ -8,6 +8,7 @@ import NextBtn from "../components/NextBtn";
 import RNPickerSelect, { defaultStyles } from 'react-native-picker-select';
 import { sexe } from "../../constants/userInfo";
 import { setUserData } from "../../hooks/globalSlice";
+import { TouchableHighlight, TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 
 export default UserInfoStepTwo = ({ navigation, onPress }) => {
@@ -18,7 +19,6 @@ export default UserInfoStepTwo = ({ navigation, onPress }) => {
     const [loading, setLoading] = useState(true);
 
     const [selectedGender, setSelectedGender] = useState('');
-    const [imc, setImc] = useState('');
     const [selectedAge, setSelectedAge] = useState('');
     const [selectedWeight, setSelectedWeight] = useState('');
     const [selectedHeight, setSelectedHeight] = useState('');
@@ -27,33 +27,32 @@ export default UserInfoStepTwo = ({ navigation, onPress }) => {
         setUser(reduxUserData);
         console.log("Reduuuuuuuuuuuuuuuuuuuux", reduxUserData);
         
-        if (user) {
+        if (reduxUserData) {
             setLoading(false)
         }
     }, [reduxUserData]);
 
-    const ageRange = Array.from({ length: 150 }, (_, i) => i + 1).map(age => ({
+    const ageRange = Array.from({ length: 150 }, (_, i) =>11 + i + 1).map(age => ({
         label: age.toString(),
         value: age
     }));
-    const weightRange = Array.from({ length: 3050 }, (_, i) => (1 + i * 0.5).toFixed(1)).map(weight => ({
+    const weightRange = Array.from({ length: 291 }, (_, i) => 20 + i).map(weight => ({
         label: weight.toString(),
-        value: parseFloat(weight)
+        value: weight
     }));
-    const heightRange = Array.from({ length: 350 }, (_, i) => 19 + i + 1).map(height => ({
+    const heightRange = Array.from({ length: 350 }, (_, i) => 29 + i + 1).map(height => ({
         label: height.toString(),
         value: height
     }));
     const onSubmit = () => {
         if (!selectedWeight) {
-            Alert.alert("Alert !", "Please weight is required.")
+            Alert.alert("Alert !", "Weight is required. Please provide it.")
             return;
         }
         if (!selectedHeight) {
-            Alert.alert("Alert !", "Please height is required.")
+            Alert.alert("Alert !", "Height is required. Please provide it.")
             return;
         }else {
-            setImc(selectedWeight/(selectedHeight*selectedHeight))
             dispatch(setUserData({
                 ...user,
                 sexe: selectedGender,
@@ -80,8 +79,8 @@ export default UserInfoStepTwo = ({ navigation, onPress }) => {
 
         return (
             <View style={[styles.container, { backgroundColor: Colors.white }]}>
-                <Text style={styles.title}>Hi {user?.username ? user?.username + ', ' : null}please fill in the following data</Text>
-                <Text style={styles.description}>MyCoach con unlock your body's hidden potential, but to do that it needs the most  accurate info from you.</Text>
+                <Text style={styles.title}>Hi {user?.name ? user?.name + ', ' : null}please provide the following information.</Text>
+                <Text style={styles.description}>MyCoach can unlock your body's hidden potential, but to do that, it needs the most accurate information from you.</Text>
 
                 <View style={{ flex: 8, marginVertical: 20 }}>
                     <View style={{ marginTop: 20 }} >
@@ -91,7 +90,7 @@ export default UserInfoStepTwo = ({ navigation, onPress }) => {
                             placeholder={{}}
                             style={pickerSelectStyles}
                         >
-                            <TouchableOpacity style={styles.button}>
+                            <View style={styles.button}>
                                 <Text style={{ fontSize: 17, fontWeight: '600' }} >
                                     Gender
                                 </Text>
@@ -99,7 +98,7 @@ export default UserInfoStepTwo = ({ navigation, onPress }) => {
                                     <Text style={{ fontSize: 15, paddingHorizontal: 4 }} >{selectedGender}</Text>
                                     <AntDesign name="right" size={17} color={"#000"} />
                                 </View>
-                            </TouchableOpacity>
+                            </View>
                         </RNPickerSelect>
                         <RNPickerSelect 
                             onValueChange={(value) => setSelectedAge(value)}
@@ -107,7 +106,7 @@ export default UserInfoStepTwo = ({ navigation, onPress }) => {
                             placeholder={{}}
                             style={pickerSelectStyles}
                         >
-                            <TouchableOpacity style={styles.button} >
+                            <View style={styles.button} >
                                 <Text style={{ fontSize: 17, fontWeight: '600' }} >
                                     Age
                                 </Text>
@@ -115,7 +114,7 @@ export default UserInfoStepTwo = ({ navigation, onPress }) => {
                                     <Text style={{ fontSize: 15, paddingHorizontal: 4 }} >{selectedAge}</Text>
                                     <AntDesign name="right" size={17} color={"#000"} />
                                 </View>
-                            </TouchableOpacity>
+                            </View>
                         </RNPickerSelect>
                         <RNPickerSelect 
                             onValueChange={(value) => setSelectedWeight(value)}
@@ -123,7 +122,7 @@ export default UserInfoStepTwo = ({ navigation, onPress }) => {
                             placeholder={{}}
                             style={pickerSelectStyles}
                         >
-                            <TouchableOpacity style={styles.button} >
+                            <View style={styles.button} >
                                 <Text style={{ fontSize: 17, fontWeight: '600' }} >
                                     Weight
                                 </Text>
@@ -131,7 +130,7 @@ export default UserInfoStepTwo = ({ navigation, onPress }) => {
                                     <Text style={{ fontSize: 15, paddingHorizontal: 4 }} >{selectedWeight+ ' kg'}</Text>
                                     <AntDesign name="right" size={17} color={"#000"} />
                                 </View>
-                            </TouchableOpacity>
+                            </View>
                         </RNPickerSelect>
                         <RNPickerSelect 
                             onValueChange={(value) => setSelectedHeight(value)}
@@ -139,7 +138,7 @@ export default UserInfoStepTwo = ({ navigation, onPress }) => {
                             placeholder={{}}
                             style={pickerSelectStyles}
                         >
-                            <TouchableOpacity style={styles.button} >
+                            <View style={styles.button} >
                                 <Text style={{ fontSize: 17, fontWeight: '600' }} >
                                     Height
                                 </Text>
@@ -147,7 +146,7 @@ export default UserInfoStepTwo = ({ navigation, onPress }) => {
                                     <Text style={{ fontSize: 15, paddingHorizontal: 4 }} >{selectedHeight+ ' cm'}</Text>
                                     <AntDesign name="right" size={17} color={"#000"} />
                                 </View>
-                            </TouchableOpacity>
+                            </View>
                         </RNPickerSelect>
                     </View>
                 </View>
