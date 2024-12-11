@@ -85,19 +85,25 @@ pip freeze > requirements.txt
 
 #### 1. Installer / lancer le serveur Ollama
 
-1. Installer Ollama
+1. Installer Ollama sur votre windows
 
-```bash
-curl -fsSL https://ollama.com/install.sh | sh
-```
+https://ollama.com/download/windows
 
-2. Installer llama3
+2. Lancer un terminal windows powershell
+
+3. Installer llama3
 
 ```bash
 ollama run llama3
 ```
 
-3. Lancer le serveur Ollama en local
+4. Ouvrir les ports de communication
+
+```bash
+$env:OLLAMA_HOST="0.0.0.0"
+```
+
+4. Lancer le serveur Ollama en local
 
 ```bash
 ollama serve
@@ -108,7 +114,7 @@ ollama serve
 
 1. Ce rendre dans le dossier où est stocké le fichier app.js sur votre terminal
 
-exemple : "cd /mnt/c/Users/ryan4/projetIA/src"
+exemple : "cd  .\OneDrive\Documents\projetIA\src"
 
 ```bash
 cd Chemin_du_fichier
@@ -124,5 +130,8 @@ npm install express axios cors path
 3. lancer le fichier app.js
 
 ```bash
+winget install Schniz.fnm
+fnm env --use-on-cd | Out-String | Invoke-Expression
+fnm use --install-if-missing 23
 node app.js
 ```
