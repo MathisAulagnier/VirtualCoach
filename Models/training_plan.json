@@ -1,0 +1,206 @@
+{
+    "seance1": {
+        "warmup": {
+            "workout": [
+                {
+                    "name": "Jumping Jacks",
+                    "sets": 3,
+                    "repetitions": 30,
+                    "rest_time": 60,
+                    "GIF_path": "/path/to/jumping_jacks.gif",
+                    "muscle_group": "Legs and Cardio"
+                },
+                {
+                    "name": "High Knees",
+                    "sets": 2,
+                    "repetitions": 20,
+                    "rest_time": 60,
+                    "GIF_path": "/path/to/high_knees.gif",
+                    "muscle_group": "Legs and Cardio"
+                }
+            ]
+        },
+        "workouts": {
+            "workout": [
+                {
+                    "name": "Squats",
+                    "sets": 3,
+                    "repetitions": 12,
+                    "rest_time": 60,
+                    "GIF_path": "/squat.gif",
+                    "muscle_group": "legs"
+                },
+                {
+                    "name": "Lunges",
+                    "sets": 2,
+                    "repetitions": 15,
+                    "rest_time": 75,
+                    "GIF_path": "/lunge.gif",
+                    "muscle_group": "legs"
+                },
+                {
+                    "name": "Push-ups",
+                    "sets": 3,
+                    "repetitions": 10,
+                    "rest_time": 60,
+                    "GIF_path": "/pushup.gif",
+                    "muscle_group": "upper"
+                },
+                {
+                    "name": "Plank",
+                    "sets": 2,
+                    "repetitions": 30,
+                    "rest_time": 120,
+                    "GIF_path": "/plank.gif",
+                    "muscle_group": "core"
+                }
+            ]
+        },
+        "stretch": {
+            "stretches": [
+                {
+                    "name": "Neck Stretch",
+                    "sets": 3,
+                    "repetitions": 30,
+                    "rest_time": 15,
+                    "GIF_path": "/path/to/neckstretch.gif",
+                    "muscle_group": "Neck and Shoulders"
+                },
+                {
+                    "name": "Shoulder Rolls",
+                    "sets": 3,
+                    "repetitions": 10,
+                    "rest_time": 10,
+                    "GIF_path": "/path/to/shoulderroll.gif",
+                    "muscle_group": "Shoulders"
+                },
+                {
+                    "name": "Chest Stretch",
+                    "sets": 2,
+                    "repetitions": 30,
+                    "rest_time": 15,
+                    "GIF_path": "/path/to/cheststretch.gif",
+                    "muscle_group": "Chest"
+                },
+                {
+                    "name": "Lat Stretch",
+                    "sets": 3,
+                    "repetitions": 30,
+                    "rest_time": 15,
+                    "GIF_path": "/path/to/latstretch.gif",
+                    "muscle_group": "Back and Shoulders"
+                },
+                {
+                    "name": "Hamstring Stretch",
+                    "sets": 2,
+                    "repetitions": 30,
+                    "rest_time": 15,
+                    "GIF_path": "/path/to/hamstretches.gif",
+                    "muscle_group": "Legs"
+                }
+            ]
+        }
+    },
+    "seance2": {
+        "warmup": {
+            "workout": [
+                {
+                    "name": "Jumping Jacks",
+                    "sets": 3,
+                    "repetitions": 30,
+                    "rest_time": 60,
+                    "GIF_path": "/path/to/jumping_jacks.gif",
+                    "muscle_group": "Legs and Cardio"
+                },
+                {
+                    "name": "High Knees",
+                    "sets": 2,
+                    "repetitions": 20,
+                    "rest_time": 60,
+                    "GIF_path": "/path/to/high_knees.gif",
+                    "muscle_group": "Legs and Cardio"
+                }
+            ]
+        },
+        "workouts": {
+            "workout": [
+                {
+                    "name": "Jumping Jacks",
+                    "sets": 2,
+                    "repetitions": 30,
+                    "rest_time": 60,
+                    "GIF_path": "/jumping_jacks.gif",
+                    "muscle_group": "cardio"
+                },
+                {
+                    "name": "Squats",
+                    "sets": 3,
+                    "repetitions": 12,
+                    "rest_time": 60,
+                    "GIF_path": "/squat.gif",
+                    "muscle_group": "legs"
+                },
+                {
+                    "name": "Lunges",
+                    "sets": 2,
+                    "repetitions": 15,
+                    "rest_time": 75,
+                    "GIF_path": "/lunge.gif",
+                    "muscle_group": "legs"
+                },
+                {
+                    "name": "Push-ups",
+                    "sets": 3,
+                    "repetitions": 10,
+                    "rest_time": 60,
+                    "GIF_path": "/pushup.gif",
+                    "muscle_group": "upper"
+                }
+            ]
+        },
+        "stretch": {
+            "stretches": [
+                {
+                    "name": "Neck Stretch",
+                    "sets": 3,
+                    "repetitions": 30,
+                    "rest_time": 15,
+                    "GIF_path": "/path/to/neckstretch.gif",
+                    "muscle_group": "Neck and Shoulders"
+                },
+                {
+                    "name": "Shoulder Rolls",
+                    "sets": 3,
+                    "repetitions": 10,
+                    "rest_time": 10,
+                    "GIF_path": "/path/to/shoulderroll.gif",
+                    "muscle_group": "Shoulders"
+                },
+                {
+                    "name": "Chest Stretch",
+                    "sets": 2,
+                    "repetitions": 30,
+                    "rest_time": 15,
+                    "GIF_path": "/path/to/cheststretch.gif",
+                    "muscle_group": "Chest"
+                },
+                {
+                    "name": "Lat Stretch",
+                    "sets": 3,
+                    "repetitions": 30,
+                    "rest_time": 15,
+                    "GIF_path": "/path/to/latstretch.gif",
+                    "muscle_group": "Back and Shoulders"
+                },
+                {
+                    "name": "Hamstring Stretch",
+                    "sets": 2,
+                    "repetitions": 30,
+                    "rest_time": 15,
+                    "GIF_path": "/path/to/hamstretches.gif",
+                    "muscle_group": "Legs"
+                }
+            ]
+        }
+    }
+}

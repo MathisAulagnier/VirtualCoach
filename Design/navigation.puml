@@ -1,0 +1,48 @@
+@startuml
+!define RECTANGLE class
+
+RECTANGLE PageConnexion
+RECTANGLE PageProfil
+RECTANGLE PagePerformance
+RECTANGLE PageCreation_Objectif
+RECTANGLE PageSeance
+RECTANGLE PageExercice
+RECTANGLE PageHome
+RECTANGLE PageAccount
+
+
+PageConnexion --> PageProfil : Inscription
+PageConnexion --> PageHome : Connexion
+
+PageHome -->  PageSeance : Cliquant sur une séance
+PageHome -->  PageAccount : Cliquant sur la photo de profil
+PageHome -->  PageHome : Cliquant sur le logo
+
+PageAccount --> PageProfil : Cliquant sur Profil
+PageAccount --> PagePerformance : Cliquant sur Performance
+PageAccount --> PageCreation_Objectif : Cliquant sur Créer un objectif
+PageAccount --> PageConnexion : Cliquant sur Déconnexion
+PageAccount --> PageHome : Cliquant sur le logo
+PageAccount --> PageAccount : Cliquant sur le profil
+
+PageSeance --> PageExercice : Cliquant sur un exercice
+PageSeance --> PageHome : Cliquant sur le logo
+PageSeance --> PageAccount : Cliquant sur la photo de profil
+PageSeance --> PageSeance : Cliquant sur changement d'exo (ouverture de popup)
+
+PageExercice --> PageSeance : Cliquant sur Retour à la séance
+PageExercice --> PageHome : Cliquant sur le logo
+PageExercice --> PageAccount : Cliquant sur la photo de profil
+PageExercice --> PageExercice : Cliquant sur next
+
+PageProfil --> PageHome : Cliquant sur le logo
+PageProfil --> PageAccount : Cliquant sur la photo de profil
+
+PagePerformance --> PageHome : Cliquant sur le logo
+PagePerformance --> PageAccount : Cliquant sur la photo de profil
+
+PageCreation_Objectif --> PageHome : Cliquant sur le logo
+PageCreation_Objectif --> PageAccount : Cliquant sur la photo de profil
+PageCreation_Objectif --> PageHome : Cliquant sur Générer un objectif
+
+@enduml

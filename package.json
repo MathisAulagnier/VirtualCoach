@@ -1,1 +1,22 @@
+<<<<<<< HEAD
 {}
+=======
+{
+  "name": "virtualcoach",
+  "version": "1.0.0",
+  "description": "## Description du projet : L’objectif est de développer une application web/mobile qui génère des programmes d’entraînement personnalisés grâce à l'intelligence artificielle en fonction des objectifs et des informations fournies par l’utilisateur.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.7",
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "path": "^0.12.7"
+  }
+}
+>>>>>>> ed3187f1d0f1b0ebb600e7f18d7a1a6a59c813d6

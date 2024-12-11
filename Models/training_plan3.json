@@ -1,0 +1,176 @@
+{
+    "seance1": {
+        "warmup": {
+            "warmup": [
+                {
+                    "name": "Walking Lunges",
+                    "sets": 3,
+                    "repetitions": 12,
+                    "rest_time": 60,
+                    "GIF_path": "/exercise/walking-lunges.gif",
+                    "muscle_group": "legs"
+                },
+                {
+                    "name": "Leg Raises",
+                    "sets": 3,
+                    "repetitions": 15,
+                    "rest_time": 60,
+                    "GIF_path": "/exercise/leg-raises.gif",
+                    "muscle_group": "lower"
+                }
+            ]
+        },
+        "workouts": {
+            "workout1": {
+                "name": "Lunges",
+                "sets": 3,
+                "repetitions": 12,
+                "rest_time": 60,
+                "gif_path": "/lunges.gif",
+                "muscle_group": "Legs"
+            },
+            "workout2": {
+                "name": "Push-ups",
+                "sets": 3,
+                "repetitions": 12,
+                "rest_time": 60,
+                "gif_path": "/pushups.gif",
+                "muscle_group": "Chest"
+            }
+        },
+        "stretch": [
+            {
+                "name": "Neck Stretch",
+                "sets": 3,
+                "repetitions": 30,
+                "rest_time": 60,
+                "gif_path": "",
+                "muscle_group": "Neck"
+            },
+            {
+                "name": "Shoulder Rolls",
+                "sets": 3,
+                "repetitions": 10,
+                "rest_time": 30,
+                "gif_path": "",
+                "muscle_group": "Shoulders"
+            },
+            {
+                "name": "Chest Stretch",
+                "sets": 3,
+                "repetitions": 30,
+                "rest_time": 60,
+                "gif_path": "",
+                "muscle_group": "Chest"
+            },
+            {
+                "name": "Cat-Cow Stretch",
+                "sets": 3,
+                "repetitions": 10,
+                "rest_time": 30,
+                "gif_path": "",
+                "muscle_group": "Back"
+            }
+        ]
+    },
+    "seance2": {
+        "warmup": {
+            "warmup": [
+                {
+                    "name": "Walking Lunges",
+                    "sets": 3,
+                    "repetitions": 12,
+                    "rest_time": 60,
+                    "GIF_path": "/exercise/walking-lunges.gif",
+                    "muscle_group": "legs"
+                },
+                {
+                    "name": "Leg Raises",
+                    "sets": 3,
+                    "repetitions": 15,
+                    "rest_time": 60,
+                    "GIF_path": "/exercise/leg-raises.gif",
+                    "muscle_group": "lower"
+                }
+            ]
+        },
+        "workouts": {
+            "workout": [
+                {
+                    "name": "Jumping Jacks",
+                    "sets": 3,
+                    "repetitions": 30,
+                    "rest_time": 15,
+                    "gif_path": "/jumpingjacks.gif",
+                    "muscle_group": "Cardio"
+                },
+                {
+                    "name": "Bodyweight Squats",
+                    "sets": 3,
+                    "repetitions": 12,
+                    "rest_time": 60,
+                    "gif_path": "/squats.gif",
+                    "muscle_group": "Legs"
+                },
+                {
+                    "name": "Push-ups with Claps",
+                    "sets": 3,
+                    "repetitions": 12,
+                    "rest_time": 60,
+                    "gif_path": "/pushupsclap.gif",
+                    "muscle_group": "Chest and Shoulders"
+                },
+                {
+                    "name": "Lunges",
+                    "sets": 3,
+                    "repetitions": 12,
+                    "rest_time": 60,
+                    "gif_path": "/lunges.gif",
+                    "muscle_group": "Legs"
+                },
+                {
+                    "name": "Plank",
+                    "sets": 2,
+                    "repetitions": 30,
+                    "rest_time": 15,
+                    "gif_path": "/plank.gif",
+                    "muscle_group": "Core"
+                }
+            ]
+        },
+        "stretch": [
+            {
+                "name": "Neck Stretch",
+                "sets": 3,
+                "repetitions": 30,
+                "rest_time": 60,
+                "gif_path": "",
+                "muscle_group": "Neck"
+            },
+            {
+                "name": "Shoulder Rolls",
+                "sets": 3,
+                "repetitions": 10,
+                "rest_time": 30,
+                "gif_path": "",
+                "muscle_group": "Shoulders"
+            },
+            {
+                "name": "Chest Stretch",
+                "sets": 3,
+                "repetitions": 30,
+                "rest_time": 60,
+                "gif_path": "",
+                "muscle_group": "Chest"
+            },
+            {
+                "name": "Cat-Cow Stretch",
+                "sets": 3,
+                "repetitions": 10,
+                "rest_time": 30,
+                "gif_path": "",
+                "muscle_group": "Back"
+            }
+        ]
+    }
+}

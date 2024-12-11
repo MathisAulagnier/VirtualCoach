@@ -1,0 +1,134 @@
+{
+    "Perdre_du_poids": {
+    },
+    "Rester_en_forme": {
+    },
+    "Devenir plus fort": {
+        "Jambes": {},
+        "Bras": {},
+        "Epaules": {},
+        "Dos": {},
+        "Poigne": {},
+        "Tronc": {},
+        "Tout le corps": {}
+    },
+    "Améliorer votre cardio": {
+        "Velo": {},
+        "Course": {},
+        "Marche": {},
+        "Escalier": {},
+        "rameur": {}
+    },
+    "Augmenter votre masse musculaire": {
+        "Jambes": {},
+        "Bras": {},
+        "Epaules": {},
+        "Dos": {},
+        "Poitrine": {},
+        "Abdo": {},
+        "Tout le corps": {}
+    },
+    "Tonifier et sculpter votre corps": {
+        "Abdomen": {},
+        "Cuisse": {},
+        "Fessiers": {},
+        "Bras": {},
+        "Epaules": {},
+        "Dos": {},
+        "Mollet": {},
+        "Tronc": {},
+        "Poitrine": {},
+        "Tout le corps": {}
+        
+    },
+    "Préparer un événement ou une compétition": {
+        "Marathon": {},
+        "Sprint": {},
+        "Powerlifting": {},
+        "Triathlon": {},
+        "Basketball": {}
+    },
+    "Réhabiliter après une blessure": {
+        "Genoux": {},
+        "Epaule": {},
+        "Dos": {},
+        "Cheville": {},
+        "Poignet": {},
+        "Hanches": {},
+        "Cou": {},
+        "Coude": {}
+    },
+    "Apprendre un mouvement": {
+        "Traction": {},
+        "Muscle up": {},
+        "Handstand": {}
+    }
+}
+
+//Traduction en anglais
+
+{
+    "Lose Weight": {},
+    "Stay Fit": {},
+    "Get Stronger": {
+        "Legs": {},
+        "Arms": {},
+        "Shoulders": {},
+        "Back": {},
+        "Grip": {},
+        "Core": {},
+        "Full Body": {}
+    },
+    "Improve Cardio": {
+        "Cycling": {},
+        "Running": {},
+        "Walking": {},
+        "Stairs": {},
+        "Rowing": {}
+    },
+    "Increase Muscle Mass": {
+        "Legs": {},
+        "Arms": {},
+        "Shoulders": {},
+        "Back": {},
+        "Chest": {},
+        "Abs": {},
+        "Full Body": {}
+    },
+    "Tone and Sculpt Your Body": {
+        "Abdomen": {},
+        "Thighs": {},
+        "Glutes": {},
+        "Arms": {},
+        "Shoulders": {},
+        "Back": {},
+        "Calves": {},
+        "Core": {},
+        "Chest": {},
+        "Full Body": {}
+    },
+    "Prepare for an Event or Competition": {
+        "Marathon": {},
+        "Sprint": {},
+        "Powerlifting": {},
+        "Triathlon": {},
+        "Basketball": {}
+    },
+    "Rehabilitate After an Injury": {
+        "Knees": {},
+        "Shoulder": {},
+        "Back": {},
+        "Ankle": {},
+        "Wrist": {},
+        "Hips": {},
+        "Neck": {},
+        "Elbow": {}
+    },
+    "Learn a Movement": {
+        "Pull-up": {},
+        "Muscle Up": {},
+        "Handstand": {}
+    }
+}
+
+  
